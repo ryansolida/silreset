@@ -1,0 +1,24 @@
+body{background: url(/cms/custom/casselbear/cbback.png) repeat-x #514A45; }
+#title{padding-top: 25px;}
+#logoRight{background-image: url(/cms/custom/casselbear/cblogo.png); width: 510px; height: 33px; top: 2px; right: 0px; cursor: pointer;}
+#logoLeft{background-image: url(/cms/custom/casselbear/backoffice.png); width:156px; height: 15px; top: 10px;}
+#title_content{font-size: 16px; margin-left: 0px;}
+
+.tabs li ul li a{ background-color: #2F9FC0;}
+.tabs li ul.active a{background-color: #EEE; color: #2F9FC0;}
+
+.hover1{background-color: #2F9FC0;}
+.color1{color: #2F9FC0}
+a{color: #2F9FC0;}
+a:hover{color: #206F88;}
+a.active_tab{color: #2F9FC0; background-color: #FFF;}
+.tabs li ul li a:hover, .tabs li ul li a.active_sub, .hover1:hover{background-color: #206F88;}
+.tabs li ul.active a:hover, .tabs li ul.active li a.active_sub{background-color: #FFF; color: #2F9FC0;}
+
+.bg_color1{background-color: #999;}
+.bg_color2{background-color: #FFF}
+.bg_color3{background-color: #FFF}
+
+.border1{border: 1px solid #999}
+.border2{border: 1px solid #CCC}
+.border3{border: 1px solid #EEE}

@@ -1,0 +1,9 @@
+{
+    "name": "sil/resetcms",
+    "description": "Reset CMS",
+    "autoload": {
+        "psr-4": {
+            "SIL\\": ""
+        }
+    }
+}

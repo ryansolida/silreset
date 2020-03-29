@@ -1,0 +1,1 @@
+<strong>Size: </strong><input type="text" name="custom_data_size" value="<?=$question_data['size']?$question_data['size']:50?>" size="3"> characters

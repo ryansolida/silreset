@@ -1,0 +1,199 @@
+/*Colors Used
+Background: #3A75C0
+Active Tab / tool Top: #C7D6E9
+tool top bottom border: #7B9FCE
+*/
+
+body{
+	font-family: 'lucida grande','lucida sans',sans-serif;
+	font-size: 14px;
+	margin: 0px;
+	background: url(/cms/images/back_fade.png) repeat-x;
+}
+
+/*menu*/
+
+.tabs{list-style: none;	margin:0; 	padding:0;	position: relative; z-index: 10;}
+.tabs li{	display: inline;	position: relative;}
+.tabs li a{font-weight: normal; padding-left: 15px; padding: 5px 15px;}
+.tabs li ul{	position: absolute;	top: 22px;	left: 0px;	border-width: 0px 0px 5px 0px;	display: none; margin: 0px; padding: 0px;}
+.tabs li ul li{width: 200px;}
+.tabs li ul li ul{	position: absolute;	left: 210px;	top: -47px;}
+.tabs li ul li ul li a{ color: #FFF;}
+/*.tabs li ul li ul li a:hover{background-color: #777;}*/
+#main_menu_holder{height: 22px; float: left; width: 500px;}
+
+
+/*COLORS UPDATES*/
+
+.tabs li ul li a{display: block; width: 200px; padding: 5px 0px 5px 10px;	background-color: #064391;	color: #EEE; font-weight: normal;}
+.tabs li ul li a:hover, .tabs li ul li a.active_sub, .hover1:hover{background-color: #0E3970; color: #EEE;}
+
+.tabs li ul.active a{background-color: #DEE7F2; color: #064391}
+.tabs li ul.active a:hover, .tabs li ul.active li a.active_sub{background-color: #F5FDFF}
+
+body{background-color: #064391}
+.bg_color1{background-color: #3A75C0}
+.bg_color2{background-color: #DEE7F2}
+.bg_color3{background-color: #F5FDFF}
+
+.border1{border: 1px solid #3A75C0}
+.border2{border: 1px solid #7B9FCE}
+.border3{border: 1px solid #DEE7F2}
+
+.hover1{background-color: #064391; color: #EEE;}
+
+
+.callout_text1{color: #67A71B;}
+
+.color1{color: #064391}
+
+a{color: #064391;text-decoration: none;font-weight: bold;}
+a:hover{color: #0E3970}
+a.active_tab{color: #064391; background-color: #FFF; font-weight: bold;	}
+
+/*END COLORS UPDATES*/
+
+
+#wrapper{width: 85%; margin: 0px auto;}
+#title{height: 60px; position: relative; overflow: hidden;}
+#title_fade{display: none; position: absolute; height: 50px; width: 5000px; background-image: url(/cms/images/title_fade.png); background-repeat: repeat-x}
+#title_content{font-size: 150%; color: #FFF; line-height: 60px; margin-left: 25px;}
+#logoRight{position: absolute; top: 0px; right: 0px;}
+#logoLeft{position: absolute; top: 0px; left: 0px;}
+#tool_body{padding: 25px; margin-bottom: 25px; background: #FFF; border-radius: 0px 0px 10px 10px; -moz-border-radius: 0px 0px 10px 10px; -webkit-box-shadow: 0px 3px 5px #444; box-shadow: 0px 3px 5px #444; -moz-box-shadow: 0px 3px 5px #444}
+#tool_top{height: 5px; border-width: 0px 0px 1px 0px}
+
+h1{margin: 0px 0px 20px 0px; color: #000; padding: 0px;}
+
+
+#admin_right_links{width: 200px; float: right; text-align: right; margin-right: 30px;}
+#admin_right_links a{color: #FFF; font-weight: normal; font-size: 95%;}
+#admin_right_links a:hover{text-decoration: underline;}
+
+/* form inputs */
+.sys_input
+{
+	padding: 3px;
+	font-size: 110%;
+}
+
+.sys_submit
+{
+	background-color: #666;
+	padding: 5px 20px;
+	color: #E2EFE0;
+	border: 2px solid #CCC;
+	font-size: 110%;
+	cursor: pointer;
+}
+
+/* Hs */
+h2{	font-size: 130%;	margin: 0px 0px 5px 0px; padding: 0px; color: #000;}
+
+/*login_form*/
+#login_form
+{
+	border-width: 4px;
+	padding: 20px 45px;
+	margin: 75px auto;
+	width: 250px;
+}
+
+#failed_login
+{
+	background-color: #FFDFE0;
+	color: #EF000A;
+	border: 1px solid #EF000A;
+	padding: 5px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+/*global tables*/
+.list_head{
+	background-color: #333;
+	background-image: url(/cms/images/row_fade_light_35.png);
+	color: #FFF;
+}
+
+.list_td{
+	background-color: #F9F9F9;
+	font-size: 90%;
+	background-image: url(/cms/images/row_fade_dark_35.png);
+	background-position: bottom;
+	border-bottom: 1px solid #CCC;
+	padding: 7px;
+}
+
+.module_field_break input, .module_field_break textarea{
+	padding: 5px;
+	font-size: 100%;
+}
+
+.list_button{
+	background-color: #666;
+	background-image: url(/cms/images/row_fade_light_35.png);
+	background-position: bottom;
+	padding: 3px 15px;
+	color: #FFF;
+	font-weight: normal;
+	text-decoration: none;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 95%;
+	text-shadow: #444 1px 1px 1px;
+	cursor: pointer;
+}
+
+.list_button:hover{background-color: #777; color: #FFF}
+
+#module_submit{
+	font-size: 100%;
+}
+
+#module_list_ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#module_list_ul li{
+	background-color: #F9F9F9;
+	border: 1px solid #CCC;
+	margin: 5px;
+	padding: 10px;
+	cursor: move;
+}
+
+#tool_body h2{
+	margin-bottom: 20px;
+	z-index: 0;
+}
+
+.round3{border-radius: 3px; -moz-border-radius: 3px}
+.top_round2{border-radius: 3px 3px 0px 0px; -moz-border-radius: 3px 3px 0px 0px}
+.round5{border-radius: 5px; -moz-border-radius: 5px}
+.top_round5{border-radius: 5px 5px 0px 0px; -moz-border-radius: 5px 5px 0px 0px}
+.round10{border-radius: 10px; -moz-border-radius: 10px}
+.top_round10{border-radius: 10px 10px 0px 0px; -moz-border-radius: 10px 10px 0px 0px}
+.round15{border-radius: 15px; -moz-border-radius: 15px}
+.top_round15{border-radius: 15px 15px 0px 0px; -moz-border-radius: 15px 15px 0px 0px}
+
+.text_shadow_light{text-shadow: #FFF 1px 1px 1px;}
+.text_shadow_dark{text-shadow: #666 1px 1px 1px;}
+.shadow_light{box-shadow: 1px 1px 1px #FFF; -moz-box-shadow: 1px 1px 3px #FFF; -webkit-box-shadow: 1px 1px 3px #FFF;}
+.shadow_dark{box-shadow: 1px 1px 1px #333; -moz-box-shadow: 1px 1px 3px #333; -webkit-box-shadow: 1px 1px 3px #333}
+
+
+.instructions{	border-bottom: 2px solid #67A71B;	background-color: #E8F5D3;	padding: 8px;	margin: 5px 0px 0px 0px;	color: #44710E;	font-size: 90%;}
+.instructions .title{font-size: 90%; font-weight: bold;	color: #76c11c;}
+
+.local_notifications{border: 2px solid #FFEF53; padding: 10px; margin: 5px 0px; background-color: #FFF3C1; display: none}
+
+/*GLOBAL FORMS*/
+.sys_form{border: 1px solid #DDD;}
+.sys_form .sys_form_container{border: 5px solid #EEE;}
+.sys_form_container h2{ padding: 15px 0px 15px 15px; background-color: #AAA; color:#FFF; margin: 0px;}
+.sys_form .form_body{ padding: 15px; margin: 0px; margin-top: -25px;border-top: 2px solid #999;}
+.sys_form .form_actions{border-top: 1px dashed; background-color: #FFF; padding: 15px; background-color: #F9F9F9; }

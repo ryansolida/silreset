@@ -1,0 +1,1 @@
+Length: <input type="text" class="field_data" id="<?=$unique?>_size" size="3">
