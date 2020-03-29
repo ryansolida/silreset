@@ -1,5 +1,5 @@
 {
-    "name": "sil/resetcms",
+    "name": "shoutitlouder/resetcms",
     "description": "Reset CMS",
     "autoload": {
         "psr-4": {
