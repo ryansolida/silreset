@@ -77,6 +77,9 @@ class ResetCMS{
     }    
 
     public static function globalIncludes(){
+
+        define("THE_GUTS_DIR",__DIR__);
+
         require_once(__DIR__."/includes/db.php");
         require_once(__DIR__."/includes/classes/global/elements.php");
         require_once(__DIR__."/includes/classes/global/pages.php");

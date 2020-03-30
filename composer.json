@@ -1,6 +1,11 @@
 {
     "name": "shoutitlouder/resetcms",
     "description": "Reset CMS",
+    "require": {
+        "symfony/var-dumper": "^5.0",
+        "vlucas/phpdotenv": "^4.1",
+        "symfony/console": "^5.0"
+    },
     "autoload": {
         "psr-4": {
             "SIL\\": ""
