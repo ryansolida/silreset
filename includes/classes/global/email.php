@@ -46,7 +46,7 @@ class email
 					$value_str_replaced = str_replace("TO_ADDRESS", $address_arr[$i], $value_str);
 					
 					/* insert into mail queue */
-					$mail_conn = mysql_connect('72.32.2.251', 'silsysadmin','mcdsfiasco') or die(mysql_error());
+					$mail_conn = mysqli_connect('72.32.2.251', 'silsysadmin','mcdsfiasco') or die(mysql_error());
 					mysql_select_db('!queues', $mail_conn) or die(mysql_error());
 					$queue_query_str = "INSERT DELAYED INTO mail_queue ($field_str) VALUES ($value_str_replaced)";
 					mysql_query($queue_query_str,$mail_conn) or die(mysql_error());
@@ -55,7 +55,7 @@ class email
 					$insert_id = mysql_insert_id($mail_conn);
 					
 					/* insert into logging table */
-					$mail_log_conn = mysql_connect('72.32.2.251', 'silsysadmin','mcdsfiasco') or die(mysql_error());
+					$mail_log_conn = mysqli_connect('72.32.2.251', 'silsysadmin','mcdsfiasco') or die(mysql_error());
 					mysql_select_db('!logging', $mail_log_conn) or die(mysql_error());
 					$logging_query_str = "INSERT INTO mail_log ($field_str, id) VALUES ($value_str_replaced, $insert_id)";
 					mysql_query($logging_query_str,$mail_log_conn) or die(mysql_error());
