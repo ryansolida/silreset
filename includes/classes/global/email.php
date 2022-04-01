@@ -5,8 +5,8 @@ class email
         function sendgrid_send($email_array){
 
             require_once(SYSTEM_ROOT_PATH.'/services/cms/includes/libraries/sendgrid/web.php');
-            $sg_user = SENDGRID_USER;
-            $sg_api_key = SENDGRID_PASSWORD;
+            $sg_user = getenv('SENDGRID_USER');
+            $sg_api_key = getenv('SENDGRID_PASSWORD');
             $sendgridweb = new sendgridWeb($sg_user,$sg_api_key);
 
             $address_arr = explode(",", $email_array['to_address']);
