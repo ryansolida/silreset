@@ -1,15 +1,13 @@
 <?php
 //simple email class
+use \SendGrid\Mail\Mail;
 class email
 {
         function sendgrid_send($email_array){
-            declare(strict_types=1);
 
-            require 'vendor/autoload.php';
-              $sg_user = getenv('SENDGRID_USER');
+            require '../vendor/autoload.php';
+            $sg_user = getenv('SENDGRID_USER');
             $sg_api_key = getenv('SENDGRID_PASSWORD');
-
-            use \SendGrid\Mail\Mail;
 
             $email = new Mail();
             $address_arr = explode(",", $email_array['to_address']);
@@ -20,25 +18,25 @@ class email
                     $email_array['from_address'],
                     $email_array['from_name']
                 );
-                $email->setSubject('Sending with Twilio SendGrid is Fun');
+                $email->setSubject($email_array['subject']);
                 // Replace the email address and name with your recipient
                 $email->addTo(
                     trim($address)
                 );
                 $email->addContent(
                     'text/html',
-                    strip_tags(str_replace("<br>",'\n',$email_array['html_body']))
+                    $email_array['html_body']
                 );
                 $sendgrid = new \SendGrid($sg_api_key);
                 try {
                     $response = $sendgrid->send($email);
-                    printf("Response status: %d\n\n", $response->statusCode());
+                   // printf("Response status: %d\n\n", $response->statusCode());
 
                     $headers = array_filter($response->headers());
-                    echo "Response Headers\n\n";
-                    foreach ($headers as $header) {
+                    //echo "Response Headers\n\n";
+                   /* foreach ($headers as $header) {
                         echo '- ' . $header . "\n";
-                    }
+                    }*/
                 } catch (Exception $e) {
                     echo 'Caught exception: '. $e->getMessage() ."\n";
                 }
