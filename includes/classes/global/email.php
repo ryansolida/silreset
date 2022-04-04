@@ -12,63 +12,37 @@ class email
             $email = new Mail();
             $address_arr = explode(",", $email_array['to_address']);
             $report_arr = array();
+            $email->setFrom(
+                $email_array['from_address'],
+                $email_array['from_name']
+            );
+            $email->setSubject($email_array['subject']);
             foreach ($address_arr as $address){
-                // Replace the email address and name with your verified sender
-                $email->setFrom(
-                    $email_array['from_address'],
-                    $email_array['from_name']
-                );
-                $email->setSubject($email_array['subject']);
                 // Replace the email address and name with your recipient
                 $email->addTo(
                     trim($address)
                 );
-                $email->addContent(
-                    'text/html',
-                    $email_array['html_body']
-                );
-                $sendgrid = new \SendGrid($sg_api_key);
-                try {
-                    $response = $sendgrid->send($email);
-                   // printf("Response status: %d\n\n", $response->statusCode());
 
-                    $headers = array_filter($response->headers());
-                    //echo "Response Headers\n\n";
-                   /* foreach ($headers as $header) {
-                        echo '- ' . $header . "\n";
-                    }*/
-                } catch (Exception $e) {
-                    echo 'Caught exception: '. $e->getMessage() ."\n";
-                }
+            }
+            $email->addContent(
+                'text/html',
+                $email_array['html_body']
+            );
+            $sendgrid = new \SendGrid($sg_api_key);
+            try {
+                $response = $sendgrid->send($email);
+               // printf("Response status: %d\n\n", $response->statusCode());
+
+                $headers = array_filter($response->headers());
+                //echo "Response Headers\n\n";
+               /* foreach ($headers as $header) {
+                    echo '- ' . $header . "\n";
+                }*/
+            } catch (Exception $e) {
+                echo 'Caught exception: '. $e->getMessage() ."\n";
             }
             return;
-            require_once(SYSTEM_ROOT_PATH.'/services/cms/includes/libraries/sendgrid/web.php');
-            $sg_user = getenv('SENDGRID_USER');
-            $sg_api_key = getenv('SENDGRID_PASSWORD');
-            $sendgridweb = new sendgridWeb($sg_user,$sg_api_key);
 
-            $address_arr = explode(",", $email_array['to_address']);
-            $report_arr = array();
-            foreach ($address_arr as $address){
-                    $send = $sendgridweb->mail_send(
-                            trim($address), //to ... can be an array
-                            '', //to name
-                            '', //header vars
-                            $email_array['subject'], //subject
-                            $email_array['html_body'], //html
-                            strip_tags(str_replace("<br>",'\n',$email_array['html_body'])), //text
-                            $email_array['from_address'], //from
-                            '', //bcc
-                            $email_array['from_name'], // from name
-                            '', //reply to
-                            '',//date
-                            '', //attachments
-                            '' //headers
-                    );
-                    $report_arr[] = $send;
-            }
-
-            return $report_arr;
     }
 
 	//probably going to need a new method here
