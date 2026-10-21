@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class resize_image {
    
    var $image;
@@ -66,6 +67,7 @@ class resize_image {
 }
 
 
+#[\AllowDynamicProperties]
 class image_upload 
 {
 	function __construct($upload_field_name,$save_dir,$max_dimension,$thumb_size=130,$thumb_only=0,$full_only=0)

@@ -1,6 +1,7 @@
 <?php
 namespace SIL;
 
+#[\AllowDynamicProperties]
 class ResetCMS{
     public static function bootstrapPage()
     { 
@@ -26,7 +27,7 @@ class ResetCMS{
         //============================================================
         // 	Look for pre-processors
         //============================================================
-        if ( count($page_info['page_content']['pre_process']) > 0 )
+        if ( count($page_info['page_content']['pre_process'] ?? []) > 0 )
         {
             foreach ($page_info['page_content']['pre_process'] as $pre_process )
             {
@@ -52,21 +53,21 @@ class ResetCMS{
             for($i=0; $i<count($page_info['page_content']); $i++)
             {
                 //if the page section does NOT have a section set, we will give it a default
-                if ( $page_info['page_content'][$i]['section'] == '' )
+                if ( ($page_info['page_content'][$i]['section'] ?? '') == '' )
                 {
                     //find local page elements
                     foreach ($local_elements as $local_element)
                     {
-                        if ( $local_element['name_actual'] == $page_info['page_content'][$i]['type'] )
+                        if ( $local_element['name_actual'] == ($page_info['page_content'][$i]['type'] ?? null) )
                         {
                             $page_info['page_content'][$i]['section'] = 'main_content'; //main_content is default
                             
                             if ( $local_element['section'] != '' ){ //if page section is defined, overwrite
                                 $page_info['page_content'][$i]['section'] = $local_element['section'];
                             }
-                        } //end if ( $local_element['name_actual'] == $page_info['page_content'][$i]['type'] )
+                        } //end if ( $local_element['name_actual'] == ($page_info['page_content'][$i]['type'] ?? null) )
                     } // end foreach ($local_elements as $local_element)
-                } //end if ( $page_info['page_content'][$i]['section'] == '' )
+                } //end if ( ($page_info['page_content'][$i]['section'] ?? '') == '' )
             }
         }
         //============================================================

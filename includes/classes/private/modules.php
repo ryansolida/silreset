@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class modules{
 	//============================================================
 	//		Here's the deal on modules

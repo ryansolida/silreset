@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class relationships
 {
 	function has_relationship($field_name)

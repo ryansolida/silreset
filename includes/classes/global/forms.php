@@ -1,5 +1,6 @@
 <?php
 
+#[\AllowDynamicProperties]
 class forms
 {
 	function __construct(){
@@ -127,6 +128,7 @@ class forms
 }
 
 
+#[\AllowDynamicProperties]
 class form_display extends forms{
 	
 	function __construct($form_id=false,$callback=false){
@@ -362,6 +364,7 @@ class form_display extends forms{
 }
 
 
+#[\AllowDynamicProperties]
 class form_processor extends forms{
 	function __construct(){
 		$this->db = new db;

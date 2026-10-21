@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class logging
 {
 	function log_page_request($page_data)

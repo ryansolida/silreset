@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class module
 {
 	function __construct($module){

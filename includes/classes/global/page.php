@@ -1,7 +1,10 @@
 <?php
 require_once('pages.php');
+#[\AllowDynamicProperties]
 class page extends pages
 {
+	public $page_info = array();
+
 	function __construct($arr='',$published='')
 	{	
 		if ($arr == '' )
@@ -35,7 +38,7 @@ class page extends pages
 		$field_search = array();
 		
 		$skip_content = false;
-		if ( $arr['skip_content'] ){
+		if ( ($arr['skip_content'] ?? null) ){
 			$skip_content = true;
 			unset($arr['skip_content']);
 		}

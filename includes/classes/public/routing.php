@@ -1,5 +1,6 @@
 <?php
 require_once(ABS_SITE_DIR."/includes/custom_routing.php");
+#[\AllowDynamicProperties]
 class routing
 {
 	function route_request($arr=false)
@@ -11,7 +12,7 @@ class routing
 		$this->url_path = $request_path;
 		
 		//We keep original request path so we can log requests after a page is kicked to 404
-		if(!$_SESSION['original_request_path']){
+		if(!($_SESSION['original_request_path'] ?? null)){
 			$_SESSION['original_request_path'] = $this->url_path;
 		}
 		
@@ -24,7 +25,7 @@ class routing
 		
 		//if we are previewing then we need to query against the edited tables
 		//if not then we set a flag to hit the published tables when searching
-		if($_REQUEST['preview'] == 1)
+		if(($_REQUEST['preview'] ?? null) == 1)
 		{
 			$published = '';
 		}
@@ -65,7 +66,7 @@ class routing
 									if ( $route['page_title'] ){
 										if ( strstr($route['page_title'],'<<') !== FALSE ){
 											$title_exp = explode("<<",str_replace(">>","",$route['page_title']));
-											$page->page_info['title'] = $title_exp[0].' '.$_REQUEST['module_data'][$title_exp[1]];
+											$page->page_info['title'] = $title_exp[0].' '.($_REQUEST['module_data'][$title_exp[1]] ?? '');
 										}
 									}
 								}

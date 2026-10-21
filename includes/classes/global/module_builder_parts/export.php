@@ -1,6 +1,7 @@
 <?php
 require_once('module_data.php');
 
+#[\AllowDynamicProperties]
 class module_data_export extends module_data
 {
 	function __construct($module_name='')

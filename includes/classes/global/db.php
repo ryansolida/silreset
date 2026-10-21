@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class db
 {
 	function __construct()
@@ -58,6 +59,7 @@ class db
 
 	function get_results()
 	{
+		$results = array();
 		while ( $result = mysqli_fetch_assoc($this->query))
 		{
 			$results[] = $result;

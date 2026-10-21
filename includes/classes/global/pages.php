@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class pages
 {
 	//============================================================
@@ -15,7 +16,7 @@ class pages
 		
 		
 		//tell query string what fields to select
-		if ( $arr['fields'] != '' )
+		if ( ($arr['fields'] ?? null) != '' )
 		{
 			$query_str_fields = trim($arr['fields']);
 		}
@@ -25,7 +26,7 @@ class pages
 		}
 		
 		//which table are we selecting from
-		if ( $arr['published'] == true )
+		if ( ($arr['published'] ?? null) == true )
 		{
 			$published = true;
 			$query_str_from = "pages_published";
@@ -38,12 +39,12 @@ class pages
 		
 		
 		//set up shortcut for searching for id
-		if ( $arr['id'] != '' )
+		if ( ($arr['id'] ?? null) != '' )
 		{
 			$arr['field_search'] = array('field'=>'id','str'=>$arr['id']);
 		}
 		//and shortcut for parent id
-		if ( $arr['parent'] != '' )
+		if ( ($arr['parent'] ?? null) != '' )
 		{
 			$arr['field_search'] = array('field'=>'parent','str'=>$arr['parent']);
 		}
@@ -63,7 +64,7 @@ class pages
 		//show or forget hidden pages
 		if ( !defined('IN_ADMIN') || !IN_ADMIN ) //if you're on the public side
 		{
-			if ( !$arr['show_hidden'] ) //and show_hidden is not set to true
+			if ( !($arr['show_hidden'] ?? null) ) //and show_hidden is not set to true
 			{
 				if ( $query_str_where != '' ){
 					$query_str_where .= " AND ";
@@ -73,7 +74,7 @@ class pages
 		}
 		
 		//any certain order?
-		if ( $arr['order_by'] != '' )
+		if ( ($arr['order_by'] ?? null) != '' )
 		{
 			$query_str_order = $arr['order_by'];
 		}
@@ -82,7 +83,8 @@ class pages
 			$query_str_order = "`order`";
 		}
 		
-		if ( $arr['limit'] != '' )
+		$query_str_limit = '';
+		if ( ($arr['limit'] ?? null) != '' )
 		{
 			$query_str_limit = " LIMIT " . $arr['limit'];
 		}
@@ -108,14 +110,14 @@ class pages
 		}
 		
 		//now let's add some more information to our results
-		if ( $arr['fields'] == '' )
+		if ( ($arr['fields'] ?? null) == '' )
 		{
 			for ($i=0; $i<$results_count; $i++)
 			{
 				
 				$results[$i]['query_str'] = $query_str;
 				
-				if ( !$arr['skip_content'] ){
+				if ( !($arr['skip_content'] ?? null) ){
 					$page_pieces = array();
 					
 					//first, let's get the page pieces
@@ -150,7 +152,7 @@ class pages
 				}
 				
 				//have there been updates since the last publish?
-				if ( $results[$i]['is_published'] )
+				if ( ($results[$i]['is_published'] ?? null) )
 				{
 					$published_results = $this->published_is_latest($published_datetime,$results[$i]['id']);
 					$results[$i]['published_is_latest'] = $published_results['result'];

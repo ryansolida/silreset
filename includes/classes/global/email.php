@@ -1,6 +1,7 @@
 <?php
 //simple email class
 use \SendGrid\Mail\Mail;
+#[\AllowDynamicProperties]
 class email
 {
         function sendgrid_send($email_array){

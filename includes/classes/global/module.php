@@ -11,6 +11,7 @@ search phrases
 
 require_once('module_builder_parts/relationships.php');
 
+#[\AllowDynamicProperties]
 class module
 {
 	

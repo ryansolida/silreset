@@ -1,5 +1,6 @@
 <?php
 
+#[\AllowDynamicProperties]
 class module_data
 {	
 	function __construct($module_name='',$get_all=FALSE)
@@ -24,7 +25,7 @@ class module_data
 		
 		$this->entries_arr = $entries_arr;
 		
-		if ($this->module_table == '' )
+		if (($this->module_table ?? '') == '' )
 		{
 			$module_info = $this->get_module_info();
 		}
@@ -41,7 +42,7 @@ class module_data
 		if ( is_array($this->form_arr) ){
 			foreach ($this->form_arr as $field)
 			{
-				if (is_array($field['relates_to']))
+				if (is_array(($field['relates_to'] ?? null)))
 				{
 					$relationsips = true;
 					$relate_table  = $field['relates_to']['table'];
@@ -59,7 +60,7 @@ class module_data
 		$query_str = "SELECT ";
 		
 		//find which fields to include
-		if ( $this->entries_arr['include_fields'] != '' )
+		if ( ($this->entries_arr['include_fields'] ?? null) != '' )
 		{
 			$include_fields = explode(',',$this->entries_arr['include_fields']);
 			foreach ($include_fields as $field)
@@ -93,7 +94,7 @@ class module_data
 		 	$query_str .= " JOIN $relate_table AS r ON o.$relate_field_local = r.$relate_field_remote";
 		 }
 		
-		if ( is_array($this->entries_arr['criteria']) )
+		if ( is_array(($this->entries_arr['criteria'] ?? null)) )
 		{
 			$query_str .= " WHERE ";
 			
@@ -131,7 +132,7 @@ class module_data
 			}
 		}
 		
-		if ( $this->module_array['reorder'] != '' && $this->entries_arr['order_by'] == '' )
+		if ( $this->module_array['reorder'] != '' && ($this->entries_arr['order_by'] ?? '') == '' )
 		{
 			if ( is_array($this->module_array['reorder']) ){
 				$query_str .= " ORDER BY o.".$this->module_array['form_prefix']."_".$this->module_array['reorder'][1].", o." . $this->module_array['form_prefix']."_order";
@@ -156,7 +157,7 @@ class module_data
 			}
 		}
 		
-		if ( $this->entries_arr['limit'] != '' && is_numeric($this->entries_arr['limit']) )
+		if ( ($this->entries_arr['limit'] ?? null) != '' && is_numeric($this->entries_arr['limit']) )
 		{
 			$query_str .= " LIMIT " . $this->entries_arr['limit'];
 		}
@@ -179,7 +180,7 @@ class module_data
 			}
 		}
 		
-		if ( $this->entries_arr['format_results'] !== false )
+		if ( ($this->entries_arr['format_results'] ?? null) !== false )
 		{
 			$results = $this->format_results($results);
 		}
@@ -259,9 +260,9 @@ class module_data
 				else
 				{
 					$form_field_name = str_replace($this->module_array['form_prefix']."_",'',$key);
-					$input_type = $this->prepped_form_arr[$form_field_name]['input_type'];
+					$input_type = ($this->prepped_form_arr[$form_field_name]['input_type'] ?? null);
 					$clean_data = $this->format_data(array('input_type'=>$input_type,'data'=>$value));
-					if ( $this->entries_arr['keep_prefix'] !== true )
+					if ( ($this->entries_arr['keep_prefix'] ?? null) !== true )
 					{
 							unset($results[$i][$key]);
 							$results[$i][$form_field_name] = $clean_data;
