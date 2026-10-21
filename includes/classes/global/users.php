@@ -23,7 +23,7 @@ class users
 				$db = new db;
 				
 				//general info
-				if ( is_array($user_arr['search']) ){
+				if ( is_array($user_arr['search'] ?? null) ){
 					$query_str = "SELECT * FROM users WHERE ";
 					$search_count = 0;
 					foreach ($user_arr['search'] as $key=>$value) {

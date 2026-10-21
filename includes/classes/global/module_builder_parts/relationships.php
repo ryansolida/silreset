@@ -6,7 +6,7 @@ class relationships
 	{
 		global $form_arr;
 		$field = $this->get_field_arr($field_name);
-		if ( is_array($field['relates_to']) )
+		if ( is_array($field['relates_to'] ?? null) )
 		{
 			return True;
 		}
