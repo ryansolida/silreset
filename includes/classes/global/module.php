@@ -26,7 +26,7 @@ class module
 			$this->module_arr = $module_arr;
 			
 			//to compensate for if a db has not been set.  sets default to 0 so we know we're looking at the actual site database
-			if ( $this->module_arr['db'] == '' )
+			if ( ($this->module_arr['db'] ?? null) == '' )
 			{
 				$this->module_arr['db'] = 0;
 			}
@@ -35,14 +35,14 @@ class module
 			$this->initialize_module();
 			
 			//set up request var real quick so we go to list by default
-			if ($_REQUEST['admin_subaction'] == '' )
+			if (($_REQUEST['admin_subaction'] ?? null) == '' )
 			{
 				$_REQUEST['admin_subaction'] = 'index';
 			}
 			
 			//once the table is created, go ahead and run script
 			//read this way: if we are directly told to edit OR if this is a single entry module and we currently aren't submitting, then we show the form
-			if ( $_REQUEST['admin_subaction'] == 'edit' || ($this->module_arr['single_entry'] == true && $_REQUEST['admin_subaction'] != 'submit' ) )
+			if ( $_REQUEST['admin_subaction'] == 'edit' || (($this->module_arr['single_entry'] ?? null) == true && $_REQUEST['admin_subaction'] != 'submit' ) )
 			{
 				$this->initialize_categories();
 				//show the form
@@ -185,7 +185,7 @@ class module
 		//============================================================
 		// 	RUN before_delete()
 		//============================================================
-		if ( method_exists($module_actions,'before_delete') )
+		if ( method_exists($module_actions ?? '','before_delete') )
 		{
 			$module_actions->before_delete();
 		}
@@ -233,7 +233,7 @@ class module
 		//============================================================
 		// 	RUN after_delete()
 		//============================================================		
-		if ( method_exists($module_actions,'after_delete') )
+		if ( method_exists($module_actions ?? '','after_delete') )
 		{
 			$module_actions->after_delete();
 		}
@@ -350,7 +350,7 @@ class module
 			$db = new db;
 			$created_query_str = "SHOW TABLES LIKE '".$tables[$z]."'";
 			$results = $db->qquery($created_query_str);
-			if ( $table_count == 0 && count($results) == 0 )
+			if ( ($table_count ?? null) == 0 && count($results) == 0 )
 			{
 				//============================================================
 				// CREATE TABLE
@@ -470,14 +470,14 @@ class module
 					{
 						$field_name_and_type = $this->process_input_types($full_name, $form_arr[$i]);
 
-						if ( $form_arr[$i]['change'] != '' )
+						if ( ($form_arr[$i]['change'] ?? null) != '' )
 						{
 							$change_name = $this->module_arr['form_prefix'].'_'.$form_arr[$i]['change'];
 							$query_str = "ALTER TABLE ".$tables[$z]." CHANGE $change_name " . $field_name_and_type;
 							$db->set_query_str($query_str);
 							$db->db_query();
 						}
-						elseif ( $form_arr[$i]['drop'] != '' )
+						elseif ( ($form_arr[$i]['drop'] ?? null) != '' )
 						{
 							$query_str = "ALTER TABLE ".$tables[$z]." DROP COLUMN $full_name";
 							$db->set_query_str($query_str);
@@ -491,7 +491,7 @@ class module
 						}
 					}
 					
-					if ( $form_arr[$i]['urlify'] && !in_array($full_name.'_url',$current_fields)){
+					if ( ($form_arr[$i]['urlify'] ?? null) && !in_array($full_name.'_url',$current_fields)){
 						$query_str = "ALTER TABLE ".$tables[$z]." ADD ".$full_name."_url VARCHAR(255)"; // .$ AFTER $last_full_name";
 						$db->set_query_str($query_str);
 						$db->db_query();
@@ -507,7 +507,7 @@ class module
 		// 	MAIN TABLE END
 		//		CATEGORY TABLE START
 		//============================================================
-		if ( $this->module_arr['categories'] )
+		if ( ($this->module_arr['categories'] ?? null) )
 		{
 		
 			$create_fields = array();
@@ -625,7 +625,7 @@ class module
 		}
 		
 		//HEADER====================================
-		elseif ( $input['input_type'] == 'header' || $input['ignore_on_submit'] != '' || $input['input_type'] == 'insert_html' || $input['input_type'] == 'require_file' )
+		elseif ( $input['input_type'] == 'header' || ($input['ignore_on_submit'] ?? null) != '' || $input['input_type'] == 'insert_html' || $input['input_type'] == 'require_file' )
 		{
 			$create_field = 'SKIP';
 		}
@@ -673,7 +673,7 @@ class module
 	function viewing_categories()
 	{
 		
-		if ( $this->module_arr['categories'] )
+		if ( ($this->module_arr['categories'] ?? null) )
 		{
 			if ( $_REQUEST['admin_subaction'] == '' && $_REQUEST['category_id'] == '' )
 			{
@@ -750,7 +750,7 @@ class module
 		//============================================================
 		// 	RUN before_publish()
 		//============================================================
-		if ( method_exists($module_actions,'before_publish()') )
+		if ( method_exists($module_actions ?? '','before_publish()') )
 		{
 			$module_actions->before_publish();
 		}
@@ -799,7 +799,7 @@ class module
 		//============================================================
 		// 	RUN after_publish()
 		//============================================================
-		if ( method_exists($module_actions,'after_publish()') )
+		if ( method_exists($module_actions ?? '','after_publish()') )
 		{
 			$module_actions->after_publish();
 		}

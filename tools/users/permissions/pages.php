@@ -1,25 +1,26 @@
-<h1>Page Privileges for <?=$display_name?></h1>
+<h1>Page Privileges for <?=($display_name ?? null)?></h1>
 
 <?php
-if  ($_REQUEST['user_id'] != '' ){
+if  (($_REQUEST['user_id'] ?? null) != '' ){
 	$type = 'user_id';
 	$$type = $_REQUEST['user_id'];
 }
 
-if ( $_REQUEST['group_id'] != '' ){
+if ( ($_REQUEST['group_id'] ?? null) != '' ){
 	$type = 'group_id';
 	$$type = $_REQUEST['group_id'];
 }
 
 ?>
-<a href="./?admin_action=<?=str_replace('_id','',$type).'s'?>" class="list_button">&laquo; Back To <?=ucfirst(str_replace('_id','',$type))?>s</a>
+<a href="./?admin_action=<?=str_replace('_id','',($type ?? '')).'s'?>" class="list_button">&laquo; Back To <?=ucfirst(str_replace('_id','',$type ?? ''))?>s</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="./?admin_action=<?=$_REQUEST['admin_action']?>&admin_subaction=modules&<?=$type?>=<?=$$type?>" class="list_button">View Module Permissions</a>
+<a href="./?admin_action=<?=$_REQUEST['admin_action']?>&admin_subaction=modules&<?=($type ?? '')?>=<?=${$type ?? ""} ?? ""?>" class="list_button">View Module Permissions</a>
 <br /><br />
 <?php
 //============================================================
 // 	GET PAGES LIST
 //============================================================
+global $pages;
 $pages = new pages;
 
 ?>
@@ -47,7 +48,7 @@ function show_pages_recursive($parent){
 		?>
 		<tr>
 			<td style="padding-left: <?=($page['level']/2) * 50?>px;" class="page <?=$class?>" width="40%">
-					<?php if ( $page['is_parent'] && $page['id'] > 1 ){
+					<?php if ( ($page['is_parent'] ?? null) && $page['id'] > 1 ){
 						?>
 						<a href="javascript:;" class="expand" id="expand_<?=$page['id']?>">+</a>
 						<?php
@@ -70,7 +71,7 @@ function show_pages_recursive($parent){
 			</td>
 		</tr>
 		<?php
-		if ( $page['is_parent'] && $page['id'] > 1 ){
+		if ( ($page['is_parent'] ?? null) && $page['id'] > 1 ){
 			?>
 			<tr>
 				<td colspan="10">
@@ -155,7 +156,7 @@ function show_pages_recursive($parent){
 	function get_permissions(){
 		//make ajax call
 		$.ajax({
-			url: './?nt=1&admin_action=permissions&admin_subaction=get_perms_data&<?=$type?>=<?=$$type?>&perms_type=pages',
+			url: './?nt=1&admin_action=permissions&admin_subaction=get_perms_data&<?=($type ?? "")?>=<?=${$type ?? ""} ?? ""?>&perms_type=pages',
 			dataType: 'json',
 			success: function(data){
 				//alert(JSON.stringify(data));
@@ -185,7 +186,7 @@ function show_pages_recursive($parent){
 			$.ajax({
 				url: './?nt=1&admin_action=permissions&admin_subaction=assign_perms_data',
 				type: 'POST',
-				data: '<?=$type?>=<?=$$type?>&page_id='+page_id+'&action='+action+'&perm='+perm,
+				data: '<?=($type ?? "")?>=<?=${$type ?? ""} ?? ""?>&page_id='+page_id+'&action='+action+'&perm='+perm,
 				success: function(msg){
 					get_permissions();
 				}

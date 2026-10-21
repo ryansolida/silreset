@@ -41,19 +41,19 @@ class users
 				$users = $db->qquery($query_str);
 				
 				//with page permissions
-				if ( $user_arr['page_perms'] ){
+				if ( ($user_arr['page_perms'] ?? null) ){
 					$query_str = "SELECT * FROM users AS u JOIN user_group_perms AS p ON u.user_id WHERE p.page_id = ".$user_arr['page_perms']." AND p.user_id = " . $user_arr['user_id'];
 					$users = $db->qquery($query_str);
 				}
 				
 				//with module permissions
-				if ( $user_arr['module_perms'] ){
+				if ( ($user_arr['module_perms'] ?? null) ){
 					$query_str = "SELECT * FROM users AS u JOIN user_group_perms AS p ON u.user_id WHERE p.module_id = ".$user_arr['module_perms']." AND p.user_id = " . $user_arr['user_id'];
 					$users = $db->qquery($query_str);
 				}
 				
 				//in a certain group
-				if ( $user_arr['group'] ){
+				if ( ($user_arr['group'] ?? null) ){
 					$query_str = "SELECT * FROM users AS u JOIN user_group_assoc AS a ON u.user_id = a.user_id WHERE a.group_id = " . $user_arr['group'];
 					$users = $db->qquery($query_str);
 				}
@@ -145,25 +145,26 @@ class users
 	//
 	//============================================================
 			function get_permissions($perm_arr){
+				$subject_type = ''; $subject_id = ''; $object_type = ''; $object_id = ''; $permissions_list_method = '';
 				//subject
-				if ( $perm_arr['user_id'] ){
+				if ( ($perm_arr['user_id'] ?? null) ){
 					$subject_type = 'user';
 					$subject_id = $perm_arr['user_id'];
 				}
 				
-				if ( $perm_arr['group_id'] ){
+				if ( ($perm_arr['group_id'] ?? null) ){
 					$subject_type = 'group';
 					$subject_id = $perm_arr['group_id'];
 				}
 				
 				//object
-				if ( $perm_arr['page_id'] ){
+				if ( ($perm_arr['page_id'] ?? null) ){
 					$object_type = 'page';
 					$object_id = $perm_arr['page_id'];
 					$permissions_list_method = 'get_page_permission_options';
 				}
 				
-				if ( $perm_arr['module_id'] ){
+				if ( ($perm_arr['module_id'] ?? null) ){
 					$object_type = 'module';
 					$object_id = $perm_arr['module_id'];
 					$permissions_list_method = 'get_module_permission_options';
@@ -171,7 +172,7 @@ class users
 				
 				//let's pull the user record to see if he/she is an admin
 				$is_admin = false;
-				if ( $subject_type == 'user' ){
+				if ( ($subject_type ?? null) == 'user' ){
 					$user = $this->get_user($subject_id);
 					if ( $user['user_priv_level'] >= 50 ){
 						$is_admin = true;
@@ -183,12 +184,12 @@ class users
 				$results = $this->db->qquery($query_str);
 				
 				$permissions = array();
-				if ( $results[0]['permissions'] != '' ){
+				if ( ($results[0]['permissions'] ?? null) != '' ){
 					$permissions = json_decode($results[0]['permissions'], true);
 				}
 			
 				//if we're specifically looking for user
-				if ( $subject_type == 'user' && !$perm_arr['exclusive'] ) //we can pass exclusive=true to retrieve ONLY the users records and skip the group
+				if ( $subject_type == 'user' && !($perm_arr['exclusive'] ?? null) ) //we can pass exclusive=true to retrieve ONLY the users records and skip the group
 				{
 					//see if any of the users groups have perms
 					$user = $this->get_user($subject_id);
@@ -205,7 +206,7 @@ class users
 					}
 					
 					//let's get all of our permissions into one level
-					for ($i=0; $i<count($group_permissions); $i++){
+					for ($i=0; $i<count(($group_permissions ?? [])); $i++){
 						foreach($group_permissions[$i] as $permission){
 							$permissions[] = $permission;
 						}

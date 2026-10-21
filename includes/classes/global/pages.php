@@ -50,7 +50,7 @@ class pages
 		}
 		
 		//are we searching for a specific search string
-		if ( is_array($arr['field_search']) )
+		if ( is_array(($arr['field_search'] ?? null)) )
 		{	
 			$query_str_where = $arr['field_search']['field']." ";
 			if ( is_numeric($arr['field_search']['str']) ){
@@ -93,7 +93,7 @@ class pages
 		// 	Let's build the query
 		//============================================================
 		$query_str = "SELECT $query_str_fields FROM $query_str_from";
-		if ( $query_str_where != '' )
+		if ( ($query_str_where ?? null) != '' )
 		{
 			$query_str .= " WHERE " . $query_str_where;
 		}

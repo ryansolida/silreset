@@ -34,7 +34,7 @@ class relationships
 	function get_field_arr($field_name)
 	{
 		global $form_arr;
-		foreach ($form_arr as $key=>$value )
+		foreach (($form_arr ?? []) as $key=>$value )
 		{
 			if ( $value['name'] == $field_name )
 			{

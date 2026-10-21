@@ -49,19 +49,19 @@ if ( $_REQUEST['id'] != '' )
 				foreach($page_list as $p)
 				{
 					$selected = '';
-					if ( $p['id'] == $_REQUEST['page_id'] )
+					if ( $p['id'] == ($_REQUEST['page_id'] ?? null) )
 					{
 						$selected = ' SELECTED';
 					}
 					
 					?><option value="<?=$p['id']?>"<?=($page_info['parent'] == $p['id'] ? ' SELECTED':'')?><?=$selected?>><?=$p['title']?> (<?=$p['path']?>)</option><?php
-					if ( $p['is_parent'] )
+					if ( ($p['is_parent'] ?? null) )
 					{
 						$plist2 = $pages->get_pages(array('parent'=>$p['id'],'skip_content'=>true));
 						foreach ($plist2 as $p2)
 						{
 							$selected = '';
-							if ( $p2['id'] == $_REQUEST['page_id'] )
+							if ( $p2['id'] == ($_REQUEST['page_id'] ?? null) )
 							{
 								$selected = ' SELECTED';
 							}

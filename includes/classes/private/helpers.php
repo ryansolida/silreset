@@ -9,11 +9,11 @@ class admin_helpers
 	
 //	private function __construct(){}
 	
-	public function parse_json($data){
+	public static function parse_json($data){
 		
 		$data = json_decode($data,true);
 		$return_data = array();
-		if ( count($data) > 0 )
+		if ( is_array($data) && count($data) > 0 )
 		{
 			foreach($data as $key=>$value)
 			{
@@ -37,7 +37,7 @@ class admin_helpers
 	//		
 	//		*** The trick here is that the textarea is given the class 'html_editor' and the name and id of the field match
 	//=====================================================================
-	function render_html_editor($arr=false)
+	static function render_html_editor($arr=false)
 	{
 	
 		if ( !is_array($arr) ){
@@ -52,7 +52,7 @@ class admin_helpers
 		}
 		
 		$height = 300;
-		if ( $arr['height'] ){
+		if ( $arr['height'] ?? null ){
 			$height = $arr['height'];
 		}
 		
@@ -61,7 +61,7 @@ class admin_helpers
 		<?php
 	}
 		
-	function render_image_library($arr)
+	static function render_image_library($arr)
 	{	
 	
 		$rel_directory = '/media/images/'.$arr['directory'];

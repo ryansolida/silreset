@@ -415,6 +415,8 @@ class page extends pages
 		);
 		
 		$count = 0;
+		$fields_str = '';
+		$values_str = '';
 		foreach ($move_arr as $key=>$value){
 			if ( $count > 0 ){
 				$fields_str .= ",";
@@ -433,7 +435,7 @@ class page extends pages
 		$db->db_query();
 		
 		//time to publish the fields
-		if ( $arr['publish_fields'] !== false )
+		if ( ($arr['publish_fields'] ?? null) !== false )
 		{
 			
 			$query_str = "SELECT * FROM page_pieces_edited WHERE page_id = " . $arr['id'];

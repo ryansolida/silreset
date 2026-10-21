@@ -1,10 +1,10 @@
 <?php
 require_once(THE_GUTS_DIR.'/includes/classes/global/forms.php');
 $Forms = new forms;
-$subaction = $_REQUEST['admin_subaction'];
+$subaction = ($_REQUEST['admin_subaction'] ?? null);
 
 
-if ( $_REQUEST['admin_subaction'] == 'create_form' ){
+if ( ($_REQUEST['admin_subaction'] ?? null) == 'create_form' ){
 	if ( $_POST ){
 		$form_data = array();
 		foreach ($_POST as $key=>$value){
@@ -20,7 +20,7 @@ if ( $_REQUEST['admin_subaction'] == 'create_form' ){
 		require('form_info.php');
 	}
 }
-elseif ( $_REQUEST['admin_subaction'] == 'edit_form' ){
+elseif ( ($_REQUEST['admin_subaction'] ?? null) == 'edit_form' ){
 	if ( $_POST ){
 		$form_data = array();
 		foreach ($_POST as $key=>$value){
@@ -37,18 +37,18 @@ elseif ( $_REQUEST['admin_subaction'] == 'edit_form' ){
 		require('form_info.php');
 	}
 }
-elseif ($_REQUEST['admin_subaction'] == 'view_questions' ){
+elseif (($_REQUEST['admin_subaction'] ?? null) == 'view_questions' ){
 	$form = $Forms->get_form($_REQUEST['form_id']);
 	require('form_questions_window.php');
 }
-elseif ($_REQUEST['admin_subaction'] == 'reorder_questions' ){
+elseif (($_REQUEST['admin_subaction'] ?? null) == 'reorder_questions' ){
 	$Forms->reorder_form_questions($_REQUEST['question_order']);
 }
-elseif ($_REQUEST['admin_subaction'] == 'get_question_list' ){
+elseif (($_REQUEST['admin_subaction'] ?? null) == 'get_question_list' ){
 	$questions = $Forms->get_form_questions($_REQUEST['form_id']);
 	require('form_questions_list.php');
 }
-elseif ( $_REQUEST['admin_subaction'] == 'create_question' ){
+elseif ( ($_REQUEST['admin_subaction'] ?? null) == 'create_question' ){
 	if ( $_POST ){
 		$question_data = array();
 		foreach ($_POST as $key=>$value){
@@ -77,7 +77,7 @@ elseif ( $_REQUEST['admin_subaction'] == 'create_question' ){
 		require('question_form.php');
 	}
 }
-elseif ($_REQUEST['admin_subaction'] == 'edit_question' ){
+elseif (($_REQUEST['admin_subaction'] ?? null) == 'edit_question' ){
 	if ( $_POST ){
 		$question_data = array();
 		foreach ($_POST as $key=>$value){
@@ -107,19 +107,19 @@ elseif ($_REQUEST['admin_subaction'] == 'edit_question' ){
 		require('question_form.php');
 	}
 }
-elseif ( $_REQUEST['admin_subaction'] == 'delete_question' ){
+elseif ( ($_REQUEST['admin_subaction'] ?? null) == 'delete_question' ){
 	if ( $_POST ){
 		$Forms->delete_form_question($_REQUEST['question_id']);
 	}
 }
-elseif ( $_REQUEST['admin_subaction'] == 'get_question_detail_form' ){
+elseif ( ($_REQUEST['admin_subaction'] ?? null) == 'get_question_detail_form' ){
 	if ( $_REQUEST['question_id'] ){
 		$question = $Forms->get_question($_REQUEST['question_id']);
 		$question_data = json_decode($question['question_data'],TRUE);
 	}
 	require('question_type_forms/'.$_REQUEST['type'].'.php');
 }
-elseif ( $_REQUEST['admin_subaction'] == 'view_results' ){
+elseif ( ($_REQUEST['admin_subaction'] ?? null) == 'view_results' ){
 	if ($_REQUEST['submission_id'] ){
 		$submission = $Forms->get_submission($_REQUEST['submission_id']);
 	}

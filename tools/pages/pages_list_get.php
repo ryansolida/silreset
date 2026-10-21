@@ -1,19 +1,19 @@
 <?php
 $pages = new pages;
-$orig_page_list = $pages->get_pages(array('parent'=>$_REQUEST['parent'],'fields'=>'id', 'order_by'=>'`order`','skip_content'=>true));
+$orig_page_list = $pages->get_pages(array('parent'=>($_REQUEST['parent'] ?? null),'fields'=>'id', 'order_by'=>'`order`','skip_content'=>true));
 
 if ( !$orig_page_list ){$orig_page_list = array();}
 
-if ( $_REQUEST['parent'] == 1 )
+if ( ($_REQUEST['parent'] ?? null) == 1 )
 {
 	$home = new page(array('id'=>1,'skip_content'=>true));
 	array_unshift($orig_page_list, $home->page_info);
 }
 foreach ($orig_page_list as $orig_page)
 {
-	if ( $orig_page['id'] != 1 && $first_ul_created == '')
+	if ( $orig_page['id'] != 1 && ($first_ul_created ?? null) == '')
 	{
-		?><ul class='page_list' id='page_list_<?=$_REQUEST['parent']?>'><?php
+		?><ul class='page_list' id='page_list_<?=($_REQUEST['parent'] ?? null)?>'><?php
 		$first_ul_created = 'created';
 	}
 	$page = new page(array('id'=>$orig_page['id'],'skip_content'=>true));
@@ -32,7 +32,7 @@ foreach ($orig_page_list as $orig_page)
 							
 							<div class='page_title' style="margin-left: 15px; float: left;">
 								<?php
-								if ( $page_info['is_parent'] && $page_info['id'] != 1 ) //we don't want to show this for the home page
+								if ( ($page_info['is_parent'] ?? null) && $page_info['id'] != 1 ) //we don't want to show this for the home page
 								{
 									?><a href='javascript:;' class='child_toggle list_button' style="padding: 2px 5px; margin: 0px;" id='of_<?=$page_info['id']?>'<?php if(TC_EXPAND_PAGE_LISTS==true){echo " style='display: none'";}?>><img src="/cms/images/child_right_arrow.png" border="0"></a>&nbsp;&nbsp;<?php
 								}
@@ -43,7 +43,7 @@ foreach ($orig_page_list as $orig_page)
 								<?=stripslashes($page_info['title'])?>
 							</div>
 							<?php
-							if ( !$page_info['published_is_latest'] && $User->user_can('publish page '.$page_info['id']) )
+							if ( !($page_info['published_is_latest'] ?? null) && $User->user_can('publish page '.$page_info['id']) )
 								{
 									?>
 									<div style="float: right; text-align: right;"><a class="preview_link fade_button" href="<?=$page_info['path']?>?preview=1" target="_blank" style="text-decoration: underline">Preview Changes</a>&nbsp;&nbsp;<a href='javascript:;' class='publish_button fade_button' id='publish_<?=$page_info['id']?>'>Publish</a></div>
@@ -89,8 +89,8 @@ foreach ($orig_page_list as $orig_page)
 								if ( $User->user_can('delete page '.$page_info['id']) )
 								{
 								?>
-								<!--<a href='javascript:;' class='list_button delete<?= $page_info['is_parent']?' parent':''?>' id='delete_<?=$page_info['id']?>'>Delete</a>-->
-								<div style="float: right; width: 16px; margin-left: 5px;"><a href="javascript:;" class="action_icon delete<?= $page_info['is_parent']?' parent':''?>" id='delete_<?=$page_info['id']?>' alt="Delete Page" title="Delete Page"><img src="/cms/images/ico_trash.png" height="14" border="0" style="padding-top: 5px"></a></div>
+								<!--<a href='javascript:;' class='list_button delete<?= ($page_info['is_parent'] ?? null)?' parent':''?>' id='delete_<?=$page_info['id']?>'>Delete</a>-->
+								<div style="float: right; width: 16px; margin-left: 5px;"><a href="javascript:;" class="action_icon delete<?= ($page_info['is_parent'] ?? null)?' parent':''?>" id='delete_<?=$page_info['id']?>' alt="Delete Page" title="Delete Page"><img src="/cms/images/ico_trash.png" height="14" border="0" style="padding-top: 5px"></a></div>
 								<?php
 								}
 								if ( $User->user_can('reorder page '.$page_info['parent']) )
@@ -109,7 +109,7 @@ foreach ($orig_page_list as $orig_page)
 			</div>
 		</div>
 		<?php
-		if ( $page_info['is_parent'] )
+		if ( ($page_info['is_parent'] ?? null) )
 		{
 			?>
 			<div id="page_list_container_<?=$page_info['id']?>"></div>

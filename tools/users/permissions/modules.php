@@ -1,20 +1,20 @@
-<h1>Module Privileges for <?=$display_name?></h1>
+<h1>Module Privileges for <?=($display_name ?? null)?></h1>
 
 <?php
-if  ($_REQUEST['user_id'] != '' ){
+if  (($_REQUEST['user_id'] ?? null) != '' ){
 	$type = 'user_id';
 	$$type = $_REQUEST['user_id'];
 }
 
-if ( $_REQUEST['group_id'] != '' ){
+if ( ($_REQUEST['group_id'] ?? null) != '' ){
 	$type = 'group_id';
 	$$type = $_REQUEST['group_id'];
 }
 
 ?>
-<a href="./?admin_action=<?=str_replace('_id','',$type).'s'?>" class="list_button">&laquo; Back To <?=ucfirst(str_replace('_id','',$type))?>s</a>
+<a href="./?admin_action=<?=str_replace('_id','',($type ?? '')).'s'?>" class="list_button">&laquo; Back To <?=ucfirst(str_replace('_id','',$type ?? ''))?>s</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="./?admin_action=<?=$_REQUEST['admin_action']?>&admin_subaction=pages&<?=$type?>=<?=$$type?>" class="list_button">View Page Permissions</a>
+<a href="./?admin_action=<?=$_REQUEST['admin_action']?>&admin_subaction=pages&<?=($type ?? '')?>=<?=${$type ?? ""} ?? ""?>" class="list_button">View Page Permissions</a>
 <br /><br />
 <?php
 //============================================================
@@ -39,7 +39,7 @@ function show_modules_recursive($children_of = false){
 		$these_modules = $modules;
 	}
 	
-	foreach ($these_modules as $module){
+	foreach (($these_modules ?? []) as $module){
 		$class="odd";
 		$level = 1;
 		if ( $children_of ){
@@ -117,7 +117,7 @@ function show_modules_recursive($children_of = false){
 			$.ajax({
 				url: './?nt=1&admin_action=permissions&admin_subaction=assign_perms_data',
 				type: 'POST',
-				data: '<?=$type?>=<?=$$type?>&module_id='+module_id+'&perms='+value,
+				data: '<?=($type ?? '')?>=<?=${$type ?? ""} ?? ""?>&module_id='+module_id+'&perms='+value,
 				success: function(msg){
 					
 					//if we've checked see and it's a child, we need to make sure the parent is enabled

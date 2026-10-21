@@ -28,7 +28,7 @@ if ( defined("CMS_GROUP_SEATS") ){
 		</td>
 	</tr>
 <?php
-for ( $i=0; $i<count($groups); $i++){
+for ( $i=0; $i<count($groups ?: []); $i++){
 	?>
 	<tbody id="group_<?=$groups[$i]['group_id']?>">
 		<tr>

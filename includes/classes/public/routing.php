@@ -48,12 +48,12 @@ class routing
 		$custom_route = new custom_route($page, $request_path);
 		
 		
-		if ( is_array($custom_route->routes) ){
+		if ( is_array($custom_route->routes ?? null) ){
 			foreach ($custom_route->routes as $key=>$route){
 				$route_exp = explode('/',$key);
 				$route_matches = true;
 				for ($i=0; $i<count($this->url_path_arr); $i++){
-					if ( $route_exp[$i] != $this->url_path_arr[$i] && $route_matches){
+					if ( ($route_exp[$i] ?? null) != ($this->url_path_arr[$i] ?? null) && $route_matches){
 						if ( strstr($route_exp[$i],'$') !== FALSE ){
 							if ( $this->url_path_arr[$i] != '' ){
 								$module = new module_data($route['module']);

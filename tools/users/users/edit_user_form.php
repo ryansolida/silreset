@@ -1,7 +1,7 @@
 <?php
 $head_text = "Create New User";
 $submit_text = "Create User";
-if ($_REQUEST['user_id'] != '' ){
+if (($_REQUEST['user_id'] ?? null) != '' ){
 	$head_text = "Edit User";
 	$submit_text = "Update User";	
 }
@@ -18,21 +18,21 @@ $current_users = $User->get_users();
 				<input type="hidden" name="nt" value="1">
 				<input type="hidden" name="admin_action" value="<?=$_REQUEST['admin_action']?>">
 				<input type="hidden" name="admin_subaction" value="<?=$_REQUEST['admin_subaction']?>">
-				<input type="hidden" name="user_id" value="<?=$_REQUEST['user_id']?>">
-				<strong>First Name: </strong><br /><input type="text" name="user_firstname" class="required sys_input" value="<?=stripslashes($user['user_firstname'])?>"><br /><br />
-				<strong>Last Name: </strong><br /><input type="text" name="user_lastname" class="required sys_input" value="<?=stripslashes($user['user_lastname'])?>"><br /><br />
-				<strong>Email: </strong><br /><input type="text" name="user_email" class="required sys_input" value="<?=stripslashes($user['user_email'])?>"><br /><br />
+				<input type="hidden" name="user_id" value="<?=($_REQUEST['user_id'] ?? null)?>">
+				<strong>First Name: </strong><br /><input type="text" name="user_firstname" class="required sys_input" value="<?=stripslashes(($user['user_firstname'] ?? ''))?>"><br /><br />
+				<strong>Last Name: </strong><br /><input type="text" name="user_lastname" class="required sys_input" value="<?=stripslashes(($user['user_lastname'] ?? ''))?>"><br /><br />
+				<strong>Email: </strong><br /><input type="text" name="user_email" class="required sys_input" value="<?=stripslashes(($user['user_email'] ?? ''))?>"><br /><br />
 				<strong>User Type: </strong><br />
 					<select name="user_priv_level">
 						<?php
 						if ($current_users){
-							?><option value="0"<?=$user['user_priv_level'] == 0?' SELECTED':''?>>Basic User</option><?php
+							?><option value="0"<?=($user['user_priv_level'] ?? null) == 0?' SELECTED':''?>>Basic User</option><?php
 						} ?>
-						<option value="50"<?=$user['user_priv_level'] == 50?' SELECTED':''?>>Site Admin</option>
+						<option value="50"<?=($user['user_priv_level'] ?? null) == 50?' SELECTED':''?>>Site Admin</option>
 					</select><br /><br />
-				<strong>Login: </strong><br /><input type="text" name="user_login" class="required sys_input" value="<?=stripslashes($user['user_login'])?>"><br /><br />
-				<strong>Password: </strong><br /><input type="password" name="user_password" id="user_password" class="<?=$_REQUEST['user_id']?'':'required '?>sys_input" value=""> <span style="color: #AAA; font-size: 90%">(Leave blank to keep current password)</span><br /><br />
-				<label style="cursor: pointer"><input type="checkbox" name="user_force_password_reset"<?=$user['user_force_password_reset']==1?' CHECKED':''?>> Force password reset on next login</label><br /><br />
+				<strong>Login: </strong><br /><input type="text" name="user_login" class="required sys_input" value="<?=stripslashes(($user['user_login'] ?? ''))?>"><br /><br />
+				<strong>Password: </strong><br /><input type="password" name="user_password" id="user_password" class="<?=($_REQUEST['user_id'] ?? null)?'':'required '?>sys_input" value=""> <span style="color: #AAA; font-size: 90%">(Leave blank to keep current password)</span><br /><br />
+				<label style="cursor: pointer"><input type="checkbox" name="user_force_password_reset"<?=($user['user_force_password_reset'] ?? null)==1?' CHECKED':''?>> Force password reset on next login</label><br /><br />
 			</div>
 			<div class="form_actions">
 				<input type="submit" value="<?=$submit_text?>"> or <a href="./?admin_action=<?=$_REQUEST['admin_action']?>">Cancel</a>

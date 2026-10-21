@@ -5,7 +5,7 @@
 	Add <?=$user['user_firstname']?> to <select id="user_to_group">
 		<option value="0">Choose Group</option>
 		<?php
-		for ($i=0; $i<count($groups); $i++){
+		for ($i=0; $i<count($groups ?: []); $i++){
 			?><option value="<?=$groups[$i]['group_id']?>"><?=$groups[$i]['group_name']?></option><?php
 		}
 		?>	. &nbsp;&nbsp;&nbsp;<input type="button" id="add_to_group" value="Add To Group">

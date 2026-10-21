@@ -1,6 +1,6 @@
 <?php
 $users_class = new users;
-$subaction = $_REQUEST['admin_subaction'];
+$subaction = ($_REQUEST['admin_subaction'] ?? null);
 
 //============================================================
 // 	USERS
@@ -72,11 +72,11 @@ if ( $_REQUEST['admin_action'] == 'users' ){
 	elseif ( $subaction == 'groups' )
 	{
 		$user = $users_class->get_user($_REQUEST['user_id']);
-		if ( $_REQUEST['action'] == 'add_user_to_group' ){ //add user to group
+		if ( ($_REQUEST['action'] ?? null) == 'add_user_to_group' ){ //add user to group
 			$users_class->add_user_to_group($_REQUEST['user_id'],$_REQUEST['group_id']);
-		} elseif ( $_REQUEST['action'] == 'remove_user_from_group' ){ //remove user from group
+		} elseif ( ($_REQUEST['action'] ?? null) == 'remove_user_from_group' ){ //remove user from group
 			$users_class->remove_user_from_group($_REQUEST['user_id'],$_REQUEST['group_id']);
-		} elseif ($_REQUEST['action'] == 'get_groups_table' ){ //get groups table
+		} elseif (($_REQUEST['action'] ?? null) == 'get_groups_table' ){ //get groups table
 			require('users/groups_table.php');
 		} else {
 			$groups = $users_class->get_groups();
@@ -161,10 +161,10 @@ elseif ( $_REQUEST['admin_action'] == 'permissions' ){
 	if ( $subaction == 'get_perms_data' ){
 		//pull permission data
 		$type = 'user';
-		if ( $_REQUEST['group_id'] ){
+		if ( ($_REQUEST['group_id'] ?? null) ){
 			$type = 'group';
 		}
-		$entity_id = $_REQUEST[$type."_id"];
+		$entity_id = ($_REQUEST[($type ?? "")."_id"] ?? null);
 		echo json_encode($users_class->get_page_perms($type, $entity_id));
 		exit;
 	}
@@ -183,11 +183,11 @@ elseif ( $_REQUEST['admin_action'] == 'permissions' ){
 		}
 	}
 	elseif ( $subaction == 'modules' ){
-		if ( $_REQUEST['user_id'] != '' ){
+		if ( ($_REQUEST['user_id'] ?? null) != '' ){
 			$user_info = $users_class->get_user($_REQUEST['user_id']);
 			$display_name = $user_info['user_firstname'].' '.$user_info['user_lastname'];
 		}
-		if ( $_REQUEST['group_id'] ){
+		if ( ($_REQUEST['group_id'] ?? null) ){
 			$group_info = $users_class->get_group($_REQUEST['group_id']);
 			$display_name = $group_info['group_name'];
 		}
@@ -198,11 +198,11 @@ elseif ( $_REQUEST['admin_action'] == 'permissions' ){
 		require('permissions/modules.php');
 	}
 	elseif ( $subaction == '' || $subaction == 'pages' ){
-		if ( $_REQUEST['user_id'] != '' ){
+		if ( ($_REQUEST['user_id'] ?? null) != '' ){
 			$user_info = $users_class->get_user($_REQUEST['user_id']);
 			$display_name = $user_info['user_firstname'].' '.$user_info['user_lastname'];
 		}
-		if ( $_REQUEST['group_id'] ){
+		if ( ($_REQUEST['group_id'] ?? null) ){
 			$group_info = $users_class->get_group($_REQUEST['group_id']);
 			$display_name = $group_info['group_name'];
 		}

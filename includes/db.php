@@ -116,7 +116,7 @@ class db
 	{
 		$this->last_query = $this->query_str;
 		//execute query
-		$this->query = mysqli_query( $this->db_connect,$this->query_str) or die(mysqli_error(). "<br />Query: ".$this->last_query);
+		$this->query = mysqli_query( $this->db_connect,$this->query_str) or die(mysqli_error($this->db_connect). "<br />Query: ".$this->last_query);
 		if ( substr($this->query_str, 0, 6) == "SELECT" )
 		{
 			$this->result_count = mysqli_num_rows($this->query);

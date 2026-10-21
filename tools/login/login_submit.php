@@ -2,7 +2,7 @@
 	$user_login = $_REQUEST['login_username'];
 	$user_password = $_REQUEST['login_password'];
 	
-	if ($_REQUEST['login_user_id'] != '' ){
+	if (($_REQUEST['login_user_id'] ?? null) != '' ){
 		$user_query_str = "SELECT * FROM users WHERE user_id = ".$_REQUEST['login_user_id'];
 	}
 	else{

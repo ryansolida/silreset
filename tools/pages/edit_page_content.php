@@ -76,7 +76,7 @@ $elements = new local_elements;
 						<div id="publish_button" style="display: none; padding-top: 5px">
 							<a href='javascript:;' class='publish_button' style="padding: 10px 15px; font-size: 110%">Publish Updates</a><br /><br />
 						</div>
-						<div class='status'>Status: <span class='status_text callout_text1'><?=$page_info['published_is_latest']?'Published':'<span style="color: red">Needs Published</span>'?></span></div>
+						<div class='status'>Status: <span class='status_text callout_text1'><?=($page_info['published_is_latest'] ?? null)?'Published':'<span style="color: red">Needs Published</span>'?></span></div>
 						<div class='last_publish'>Last Published: <span class='publish_text callout_text1'><?=$page_info['is_published']?date("M d, Y",strtotime($page_info['last_publish_date'])):'<span style="color: red">Never Published</span>'?></span></div>
 					</div>
 				</div>	
@@ -98,7 +98,7 @@ $elements = new local_elements;
 		}
 				
 		<?php	
-		if ( !$page_info['published_is_latest'] )
+		if ( !($page_info['published_is_latest'] ?? null) )
 		{
 			?>$("#publish_button").show();<?php
 		}

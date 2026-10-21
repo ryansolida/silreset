@@ -13,22 +13,22 @@ global $module_actions;
 //============================================================
 // 	RUN before_form() method
 //============================================================
-if ( method_exists($module_actions,'before_form') )
+if ( method_exists($module_actions ?? '','before_form') )
 {
 	$module_actions->before_form();
 }
 
 //set the ID correctly
-if ( $this->module_arr['single_entry'] ==true && $this->get_entries_count() > 0 ){
+if ( ($this->module_arr['single_entry'] ?? null) ==true && $this->get_entries_count() > 0 ){
 	$record_id = 1;
 } else {
-	if ( $_REQUEST['category_id'] != '' )
+	if ( ($_REQUEST['category_id'] ?? null) != '' )
 	{
 		$record_id = $_REQUEST['category_id'];
 	}
 	else
 	{
-		$record_id = $_REQUEST['id'];
+		$record_id = ($_REQUEST['id'] ?? null);
 	}
 }
 
@@ -39,7 +39,7 @@ if ( $this->module_arr['publish'] )
 }
 
 /*GATHER INFO =================================*/
-if ( str_replace('new','',$record_id) != '' ) // "new" is sent by the categories list
+if ( str_replace('new','',$record_id ?? '') != '' ) // "new" is sent by the categories list
 {
 	if ( $this->viewing_categories() )
 	{
@@ -150,7 +150,7 @@ if ( str_replace('new','',$record_id) != '' ) // "new" is sent by the categories
 	        },
 	        success: function(data) {
 	        	<?php
-	        	if ( $_REQUEST['debug'] != '' )
+	        	if ( ($_REQUEST['debug'] ?? null) != '' )
 	        	{
 	        		?>alert(data);<?php
 	        	}
@@ -158,12 +158,12 @@ if ( str_replace('new','',$record_id) != '' ) // "new" is sent by the categories
 	        	$("#status_dialog").html('<strong>Submitted!</strong><div>Please Wait...</div>');
 				setTimeout(function(){
 					<?php
-					if ( $_REQUEST['from_category'] != '' )
+					if ( ($_REQUEST['from_category'] ?? null) != '' )
 					{
 						$from_text = "&category_id=".$_REQUEST['from_category'];
 					}
 					?>
-					window.location = './?admin_action=<?=$this->module_arr['admin_action']?><?=$from_text?>';
+					window.location = './?admin_action=<?=$this->module_arr['admin_action']?><?=($from_text ?? null)?>';
 				},500);
 	        }
 	    });
@@ -306,12 +306,12 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			?>
 			<span class='module_field_label'><?=$cur_elem['label']?>: </span>
 			<?php
-			if ( $cur_elem['notes'] != '' )
+			if ( ($cur_elem['notes'] ?? null) != '' )
 			{
 				?><div class="module_field_notes"><?=stripslashes($cur_elem['notes'])?></div>	<?php
 			}
 			?>
-			<input type="text" name="<?=$cur_elem['full_name']?>" id="<?=$cur_elem['full_name']?>" value="<?=htmlspecialchars(stripslashes($data[$cur_elem['full_name']]))?>" <?=$size?>>
+			<input type="text" name="<?=$cur_elem['full_name']?>" id="<?=$cur_elem['full_name']?>" value="<?=htmlspecialchars(stripslashes(($data[$cur_elem['full_name']] ?? '')))?>" <?=$size?>>
 			<?php
 			break;
 			
@@ -333,12 +333,12 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			<span class='module_field_label'><?=$cur_elem['label']?>: </span>
 			
 			<?php
-			if ( $cur_elem['notes'] != '' )
+			if ( ($cur_elem['notes'] ?? null) != '' )
 			{
 				?><div class="module_field_notes"><?=stripslashes($cur_elem['notes'])?></div>	<?php
 			}
 			?>
-			<textarea name="<?=$cur_elem['full_name']?>" id="<?=$cur_elem['full_name']?>" <?=$cols?> <?=$rows?>><?=stripslashes($data[$cur_elem['full_name']])?></textarea>
+			<textarea name="<?=$cur_elem['full_name']?>" id="<?=$cur_elem['full_name']?>" <?=$cols?> <?=$rows?>><?=stripslashes(($data[$cur_elem['full_name']] ?? ''))?></textarea>
 			<?php
 			break;
 			
@@ -527,7 +527,7 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			$full_thumb_path = '';
 			$img_exists = false;
 			
-			if ( $data[$cur_elem['full_name']]  != '' )
+			if ( ($data[$cur_elem['full_name']] ?? null)  != '' )
 			{
 			 	//show thumb
 				$full_path_exp = explode('/',SITE_URL.$data[$cur_elem['full_name']]);
@@ -540,7 +540,7 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			<span class='module_field_label'><?=$cur_elem['label']?>: </span>
 			
 			<?php
-			if ( $cur_elem['notes'] != '' )
+			if ( ($cur_elem['notes'] ?? null) != '' )
 			{
 				?><div class="module_field_notes"><?=stripslashes($cur_elem['notes'])?></div>	<?php
 			}
@@ -553,7 +553,7 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			?>
 			<div id="<?=$cur_elem['full_name']?>_img_selector" <?=($img_exists?'style="display: none"':'')?>>
 				<input type="file" name="<?=$cur_elem['name']?>" id="image_value_<?=$cur_elem['name']?>">
-				<input type="hidden" name="<?=$cur_elem['full_name']?>_placeholder" id="<?=$cur_elem['full_name']?>_placeholder" value="<?=$data[$cur_elem['full_name']]?>">
+				<input type="hidden" name="<?=$cur_elem['full_name']?>_placeholder" id="<?=$cur_elem['full_name']?>_placeholder" value="<?=($data[$cur_elem['full_name']] ?? null)?>">
 			</div>
 			
 			<?php
@@ -623,12 +623,12 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 			<span class='module_field_label'><?=$cur_elem['label']?>: </span>
 			
 				<?php
-				if ( $cur_elem['notes'] != '' )
+				if ( ($cur_elem['notes'] ?? null) != '' )
 				{
 					?><div class="module_field_notes"><?=stripslashes($cur_elem['notes'])?></div>	<?php
 				}
 				?>
-				<textarea id='<?=$field_name?>' class='html_editor' name='<?=$cur_elem['full_name']?>' style='width: 100%;' rel='300px'><?=stripslashes($data[$cur_elem['full_name']])?></textarea>
+				<textarea id='<?=($field_name ?? null)?>' class='html_editor' name='<?=$cur_elem['full_name']?>' style='width: 100%;' rel='300px'><?=stripslashes($data[$cur_elem['full_name']])?></textarea>
 			<?php
 			/*
 			$abs_editor_dir = THE_GUTS_DIR."/web_space/includes/wysiwygPro/";
@@ -852,7 +852,7 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 //============================================================
 // 	NOW ADD PUBLISH AND EXPIRATION DATES
 //============================================================
-if ( $this->module_arr['content_expiration_date'] === true || $this->module_arr['content_publish_date'] === true )
+if ( ($this->module_arr['content_expiration_date'] ?? null) === true || ($this->module_arr['content_publish_date'] ?? null) === true )
 {
 	?>
 	<br /><br />
@@ -1114,7 +1114,7 @@ if ( $this->module_arr['content_expiration_date'] === true || $this->module_arr[
 //============================================================
 //  RUN after_form()
 //============================================================
-if ( method_exists($module_actions,'after_form') )
+if ( method_exists($module_actions ?? '','after_form') )
 {
 	$module_actions->after_form();
 }
@@ -1126,7 +1126,7 @@ if ( method_exists($module_actions,'after_form') )
 <script language="javascript">
 	var html_editors = new Array();
 	$().ready(function(){
-		$("#tool_title").html('<?php global $admin_page_title; echo addslashes($admin_page_title)?>').show();
+		$("#tool_title").html('<?php global $admin_page_title; echo addslashes($admin_page_title ?? '')?>').show();
 		
 		$(".html_editor").each(function(){
 		

@@ -28,10 +28,10 @@ $name = $elements->elements_list[$type]['name_display'];
 			<input type='hidden' name='id' value='<?=$_REQUEST['id']?>'>
 			<input type='hidden' name='content_page_id' value='<?=$_REQUEST['page_id']?>'>
 			<input type='hidden' name='content_type' value='<?=$type?>'>
-			<input type='hidden' name='content_order' value='<?=$_REQUEST['content_order']?>'>
+			<input type='hidden' name='content_order' value='<?=$_REQUEST['content_order'] ?? ''?>'>
 			<input type='hidden' name='content_section' value='<?=$_REQUEST['section']?>'>
 			<?php
-			if ( $elements->elements_list[$type]['json'] ){
+			if ( $elements->elements_list[$type]['json'] ?? null ){
 				?>
 				<input type='hidden' name='json' value='true'/>
 				<?php

@@ -1,6 +1,6 @@
 <div id="login_form" class="round5 border2 bg_color3">
 	<?php
-	if ( $login_failed == 1 )
+	if ( ($login_failed ?? null) == 1 )
 	{
 		?>
 		<div id="failed_login">Incorrect Login!</div>

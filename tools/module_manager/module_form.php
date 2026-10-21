@@ -1,4 +1,4 @@
-<h2><?=($_REQUEST['module_id'])?'Editing '.$module['display_name']:'New Module'?></h2>
+<h2><?=(($_REQUEST['module_id'] ?? null))?'Editing '.$module['display_name']:'New Module'?></h2>
 
 <?php $container_style = "border: 3px solid #CCC; padding: 15px; background-color: #F9F9F9; margin-bottom: 25px"; ?>
 

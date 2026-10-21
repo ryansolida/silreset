@@ -1,10 +1,10 @@
 <?php
-$page = new page($_REQUEST['page_id']);
+$page = new page(($_REQUEST['page_id'] ?? null));
 $page_info = $page->page_info;
-$page_sections = $page_info['page_content'];
+$page_sections = ($page_info['page_content'] ?? null);
 
 $elements = new local_elements();
-if ( $page_sections['pre_process'] ){
+if ( ($page_sections['pre_process'] ?? null) ){
 	?>
 	<div class='nocontent' style='padding: 10px'>
 		<p style='padding: 20px; border-width: 3px' class="border2 bg_color3 round5 pre_process"><strong>This page uses an external script to run.</strong> <br />
@@ -45,7 +45,7 @@ if ( $page_sections['pre_process'] ){
 	</div>
 	<?php
 }
-elseif ( count($page_sections[$_REQUEST['section']]) == 0 )
+elseif ( count($page_sections[$_REQUEST["section"] ?? ""] ?? []) == 0 )
 {
 	?>
 	<div class='nocontent' style='padding: 10px'>
@@ -89,18 +89,20 @@ else{
 //============================================================
 // 	BUILD "ADD CONTENT" LIST
 //============================================================
+$links = '';
+$options = '';
 foreach ($elements->elements_list as $element)
 {
 	$show_link = false;
 	
-	if ( $_SESSION['reset']['user_priv_level'] >= $element['min_priv_level'] ){
-		if ( !$element['page_sections'] ){
+	if ( $_SESSION['reset']['user_priv_level'] >= ($element['min_priv_level'] ?? null) ){
+		if ( !($element['page_sections'] ?? null) ){
 			$show_link = true;
 		} else {
 			if ( is_string($element['page_sections']) ){
 				$element['page_sections'] = array($element['page_sections']);
 			}
-			if ( in_array($_REQUEST['section'],$element['page_sections']) ){
+			if ( in_array(($_REQUEST['section'] ?? []),$element['page_sections']) ){
 				$show_link = true;
 			}
 		}

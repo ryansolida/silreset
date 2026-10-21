@@ -48,7 +48,7 @@ class ResetCMS{
         $elements_vars = get_object_vars($elements->local_elements); //pull list of elements from local includes/elements.php
         $local_elements = $elements_vars['elements_list'];
         
-        if ( count($page_info['page_content']) > 0 )
+        if ( count($page_info['page_content'] ?? []) > 0 )
         {
             for($i=0; $i<count($page_info['page_content']); $i++)
             {
@@ -74,7 +74,7 @@ class ResetCMS{
         // 	END PAGE SECTIONS
         //============================================================
         
-        $elements->page_elements = $page_info['page_content'];
+        $elements->page_elements = ($page_info['page_content'] ?? null);
     }    
 
     public static function globalIncludes(){
@@ -110,7 +110,7 @@ class ResetCMS{
         require_once(__DIR__.'/includes/classes/global/pages.php');
         require_once(__DIR__.'/includes/classes/global/users.php');
 
-        if ( $_SESSION['reset']['logged_in'] != '' && $logged_out == '' )
+        if ( ($_SESSION['reset']['logged_in'] ?? null) != '' && ($logged_out ?? null) == '' )
         {
             $User = new \users;
             $User->logged_in_user = $_SESSION['reset']['user_id'];
@@ -162,7 +162,7 @@ class ResetCMS{
             $req_file = 'tools/login/control.php';
         }
 
-        if ( $_REQUEST['nt'] != '' )
+        if ( ($_REQUEST['nt'] ?? null) != '' )
         {
             require($req_file);
         }

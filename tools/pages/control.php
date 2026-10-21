@@ -1,6 +1,6 @@
 <?php
 
-if ( $_REQUEST['nt'] == '' )
+if ( ($_REQUEST['nt'] ?? null) == '' )
 {
 	?><style type='text/css'><?php
 	require('pages.css');
@@ -11,7 +11,7 @@ require_once(THE_GUTS_DIR."/includes/classes/global/pages.php");
 require_once(THE_GUTS_DIR."/includes/classes/global/page.php");
 $page = new page;
 
-$subaction = $_REQUEST['admin_subaction'];
+$subaction = ($_REQUEST['admin_subaction'] ?? null);
 
 if ( $subaction == 'edit_page_content' )
 {
@@ -23,7 +23,7 @@ elseif ( $subaction == 'get_page_pieces' )
 }
 elseif ( $subaction == 'edit_page_content_piece' )
 {
-	if ($_REQUEST['submitted'] == '' )
+	if (($_REQUEST['submitted'] ?? '') == '' )
 	{
 		require('edit_page_content_piece.php');
 	}
@@ -42,7 +42,7 @@ elseif ( $subaction == 'edit_page_content_piece' )
 		//============================================================
 		// 	READING THROUGH MULTI FIELD TYPES
 		//============================================================
-		if ( $_REQUEST['json'] )
+		if ( $_REQUEST['json'] ?? null )
 		{
 			//look through each fields and find which ones start with the multi triggers (currently multi_ and json_)
 			// and add those to the array
@@ -112,7 +112,7 @@ elseif ( $subaction == 'image_library' )
 {
 	require(THE_GUTS_DIR.'/tools/pages/image_library/control.php');
 }
-elseif ( $_REQUEST['task'] != '' )
+elseif ( ($_REQUEST['task'] ?? null) != '' )
 {
 	$arr = array();
 	foreach ($_REQUEST as $key=>$value)

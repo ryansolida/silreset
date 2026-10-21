@@ -24,17 +24,17 @@ if ( count($modules) > 0 ){
 		foreach ($modules as $top_module)
 		{
 			$link = '/admin/?admin_action='.$top_module['admin_action'];
-			if ( $top_module['children'] && !$top_module['has_index'] ){
+			if ( ($top_module['children'] ?? null) && !$top_module['has_index'] ){
 				$link = 'javascript:;';
 			}
 			
 			if ( $User->user_can('see module '.$top_module['admin_action']) )
 			{
 				?>
-				<li class='<?=$top_module['children']?'menu_subparent':''?>'>
+				<li class='<?=($top_module['children'] ?? null)?'menu_subparent':''?>'>
 					<a href="<?=$link?>" class="main_menu_link"><?=$top_module['title']?></a>
 					<?php
-					if ( $top_module['children'] ){
+					if ( ($top_module['children'] ?? null) ){
 					?>
 						<ul class="drop_level2">
 						<?php

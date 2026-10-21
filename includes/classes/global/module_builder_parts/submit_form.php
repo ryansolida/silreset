@@ -12,7 +12,7 @@ global $module_actions;
 //============================================================
 // 	RUN before_submit()
 //============================================================
-if ( method_exists($module_actions,'before_submit') )
+if ( method_exists($module_actions ?? '','before_submit') )
 {
 	$module_actions->before_submit();
 }
@@ -386,7 +386,7 @@ if ( $this->module_arr['single_entry'] == true ){
 //============================================================
 // 	RUN after_submit()
 //============================================================
-if ( method_exists($module_actions,'after_submit') )
+if ( method_exists($module_actions ?? '','after_submit') )
 {
 	$module_actions->after_submit();
 }

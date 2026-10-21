@@ -12,7 +12,7 @@ global $module_actions;
 //============================================================
 // 	RUN before_list()
 //============================================================
-if ( method_exists($module_actions,'before_list') )
+if ( method_exists($module_actions ?? '','before_list') )
 {
 	$module_actions->before_list();
 }
@@ -29,7 +29,7 @@ $permissions['can_edit'] = true;
 $permissions['can_reorder'] = true;
 $permissions['can_publish'] = true;
 
-if ( DEEP_PERMISSIONS === true )
+if ( defined('DEEP_PERMISSIONS') && DEEP_PERMISSIONS === true )
 {
 	if ( $_SESSION['priv_level'] < 50 )
 	{
@@ -99,7 +99,7 @@ else
 //============================================================
 //		DISPLAY CATEGORY TITLE IF WE HAVE ONE
 //============================================================
-if ( $_REQUEST['category_id'] != '' && $_REQUEST['nt'] == '' )
+if ( ($_REQUEST['category_id'] ?? null) != '' && $_REQUEST['nt'] == '' )
 {
 	$query_str = "SELECT * FROM " . $this->module_arr['category_data']['form_dest_table'] . " WHERE " . $this->module_arr['category_data']['form_prefix']."_id = " . $_REQUEST['category_id'];
 	$db = new db($this->module_arr['db']);
@@ -160,7 +160,7 @@ elseif ( $base_arr['order_by'] != '' )
 //============================================================
 // 	RUN THE QUERY
 //============================================================
-if ( $_REQUEST['category_id'] != '' )
+if ( ($_REQUEST['category_id'] ?? null) != '' )
 {
 	$query_str = "SELECT * FROM ".$this->module_arr['form_dest_table']." WHERE " . $this->module_arr['form_prefix'].'_'.$this->module_arr['category_data']['form_prefix'] . " = " . $_REQUEST['category_id'];
 }
@@ -168,7 +168,7 @@ else
 {
 	$query_str = "SELECT * FROM ".$this->module_arr['form_dest_table'];
 	
-	if ( $_REQUEST['filter'] != '' )
+	if ( ($_REQUEST['filter'] ?? null) != '' )
 	{
 		$query_str .= " WHERE " . $this->module_arr['form_prefix']."_".$base_arr['filter_by'] . " = '" . $_REQUEST['filter'] . "'";
 	}
@@ -184,7 +184,7 @@ $db = new db($this->module_arr['db']);
 $list = $db->qquery($query_str);
 
 //if we are coming in from an ajax call, we don't want the javascript includes or the main block
-if ( $_REQUEST['nt'] == '' )
+if ( ($_REQUEST['nt'] ?? null) == '' )
 {
 ?>
 	<script language="javascript" type="text/javascript" src="/cms/includes/js_libraries/jquery/addons/ui/ui.core.js"></script>
@@ -197,7 +197,7 @@ if ( $_REQUEST['nt'] == '' )
 //============================================================
 // 	BACK TO PARENT BUTTON
 //============================================================
-if ( count($this->module_arr['parent']) > 0 )
+if ( count(($this->module_arr['parent'] ?? [])) > 0 )
 {
 	?>
 		<div class='list_back_to_parent_container'>
@@ -235,7 +235,7 @@ if ( count($this->module_arr['parent']) > 0 )
 //standard create button
 //if we have a category id, we want to have that category already highlighted when we go into the form
 
-if ( $_REQUEST['category_id'] != '' )
+if ( ($_REQUEST['category_id'] ?? null) != '' )
 {
 	$from_text = "&from_category=".$_REQUEST['category_id'];
 }
@@ -261,7 +261,7 @@ else
 if ( $print_create_button && $permissions['can_create'] )
 {
 	?>
-	<a href='./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=edit<?=$from_text?>' class='list_button'>Create New</a>
+	<a href='./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=edit<?=($from_text ?? null)?>' class='list_button'>Create New</a>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<?php
 }
@@ -284,7 +284,7 @@ if ( $this->module_arr['reorder'] && count($list) != 0 && $permissions['can_reor
 //============================================================
 // 	FILTER
 //============================================================
-if ( $base_arr['filter_by'] != '' )
+if ( ($base_arr['filter_by'] ?? null) != '' )
 {	
 	?>
 	<div style='position: absolute; right: 25px; top: 0px'>
@@ -355,7 +355,7 @@ if ( $base_arr['filter_by'] != '' )
 //============================================================
 // 	SHOW DROP DOWN LIST OF WHAT TO VIEW IF WE HAVE EXPIRING CONTENT
 //============================================================
-if ( $this->module_arr['content_expiration_date'] === true || $this->module_arr['content_publish_date'] === true )
+if ( ($this->module_arr['content_expiration_date'] ?? null) === true || ($this->module_arr['content_publish_date'] ?? null) === true )
 {
 	?>
 		<div style="float: right; padding-right: 35px;">
@@ -454,7 +454,7 @@ else
 					for ( $i=0; $i<count($base_arr); $i++ )
 					{
 						?>
-						<td class="list_head"><?=$base_arr[$i]['display_name']?>&nbsp;</td>
+						<td class="list_head"><?=($base_arr[$i]['display_name'] ?? null)?>&nbsp;</td>
 						<?php
 					}
 					?>
@@ -491,11 +491,11 @@ else
 						for ( $j=0; $j<count($base_arr); $j++ )
 						{
 							//find fields not specific to tool and leave out prefix
-							if ( $base_arr[$j]['field'] == 'insert_datetime' || $base_arr[$j]['field'] == 'update_datetime' ||  $base_arr[$j]['field'] == 'id' || $base_arr[$j]['field'] == 'content_publish_date' || $base_arr[$j]['field'] == 'content_expiration_date' )
+							if ( ($base_arr[$j]['field'] ?? null) == 'insert_datetime' || ($base_arr[$j]['field'] ?? null) == 'update_datetime' ||  ($base_arr[$j]['field'] ?? null) == 'id' || ($base_arr[$j]['field'] ?? null) == 'content_publish_date' || ($base_arr[$j]['field'] ?? null) == 'content_expiration_date' )
 							{
 								$value = $list[$i][$base_arr[$j]['field']];
 							}
-							elseif ( $base_arr[$j]['field'] == 'count' ) //if we want the count inside the categories, put it here
+							elseif ( ($base_arr[$j]['field'] ?? null) == 'count' ) //if we want the count inside the categories, put it here
 							{
 								$query_str = "SELECT * FROM " . $this->module_arr['orig_table'] . " WHERE " . $this->module_arr['orig_prefix'] . "_" . $base_arr[$j]['assoc_field'] . " = " . $list[$i]['id'];
 								$db = new db($this->module_arr['db']);
@@ -504,7 +504,7 @@ else
 								?><div id="count_items_<?=$list[$i]['id']?>" style="width: 1px; height: 1px; visibility: hidden"><?=$value?></div><?php
 							}
 							//if we are supposed to grab an associative value from another table, do it now
-							elseif ( $base_arr[$j]['assoc_table'] != '' )
+							elseif ( ($base_arr[$j]['assoc_table'] ?? null) != '' )
 							{
 								$query_str = "SELECT * FROM " . $base_arr[$j]['assoc_table'] . " WHERE " . $base_arr[$j]['assoc_field'] . " = " .  $list[$i][$this->module_arr['form_prefix']."_".$base_arr[$j]['field']];
 								$assoc_results = $db->qquery($query_str);
@@ -512,15 +512,15 @@ else
 							}
 							else
 							{
-								$value = $list[$i][$this->module_arr['form_prefix'].'_'.$base_arr[$j]['field']];
+								$value = ($list[$i][$this->module_arr['form_prefix'].'_'.($base_arr[$j]['field'] ?? null)] ?? null);
 								
-								if ( $relationships->has_relationship($base_arr[$j]['field']) )
+								if ( $relationships->has_relationship(($base_arr[$j]['field'] ?? null)) )
 								{
 									$value = stripslashes($relationships->get_match(array('local_name'=>$base_arr[$j]['field'],'value'=>$value)));
 								}
 							}
 							
-							$type = $base_arr[$j]['type'];
+							$type = ($base_arr[$j]['type'] ?? null);
 
 							if ( $type == 'datetime' ){
 								if ( $value == '0000-00-00 00:00:00' )
@@ -549,7 +549,7 @@ else
 								}
 							}
 							?>
-							<td class="list_td"><?=stripslashes($value)?>&nbsp;</td>
+							<td class="list_td"><?=stripslashes($value ?? "")?>&nbsp;</td>
 							<?php
 						}
 						
@@ -567,7 +567,7 @@ else
 						&nbsp;&nbsp;
 						<?php
 						}
-						if ( is_array($base_arr['action_buttons']) )
+						if ( is_array(($base_arr['action_buttons'] ?? null)) )
 						{
 							foreach ($base_arr['action_buttons'] as $button)
 							{
@@ -607,7 +607,7 @@ else
 						if (  $permissions['can_edit'] )
 						{
 						?>
-						<a href="./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=edit&<?=$cat_prefix?>id=<?=$id?><?=$from_text?>" class="list_button">Edit</a><?php // $from_text is created earlier in this function?>
+						<a href="./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=edit&<?=$cat_prefix?>id=<?=$id?><?=($from_text ?? null)?>" class="list_button">Edit</a><?php // $from_text is created earlier in this function?>
 						&nbsp;&nbsp;
 						<?php
 						}
@@ -632,7 +632,7 @@ else
 				//		The list display will then be controlled by javascript which will hide and show certain rows
 				//		based on this date criteria
 				//============================================================
-				if ( $this->module_arr['content_expiration_date'] === true || $this->module_arr['content_publish_date'] === true )
+				if ( ($this->module_arr['content_expiration_date'] ?? null) === true || ($this->module_arr['content_publish_date'] ?? null) === true )
 				{
 					$classes = '';
 					
@@ -698,7 +698,7 @@ else
 							for ( $j=0; $j<count($base_arr); $j++ )
 							{
 								
-								if ( $base_arr[$j]['display_name'] != '' && $base_arr[$j]['field'] != 'count')
+								if ( ($base_arr[$j]['display_name'] ?? null) != '' && ($base_arr[$j]['field'] ?? null) != 'count')
 								{	
 									//find fields not specific to tool and leave out prefix
 									if ( $base_arr[$j]['field'] == 'insert_datetime' || $base_arr[$j]['field'] == 'update_datetime' ||  $base_arr[$j]['field'] == 'id')
@@ -711,7 +711,7 @@ else
 										$value = $list[$i][$this->module_arr['form_prefix'].'_'.$base_arr[$j]['field']];
 									}
 									
-									$type = $base_arr[$j]['type'];
+									$type = ($base_arr[$j]['type'] ?? null);
 		
 									if ( $type == 'datetime' ){
 										$value = date("M j, Y g:ia",strtotime($value));
@@ -765,7 +765,7 @@ else
 		//  REORDER JAVASCRIPT CODE
 		//============================================================
 		//more reorder stuff we only want the first time around..... not after an ajax call
-		if ( $_REQUEST['nt'] == '' && $this->module_arr['reorder'] )
+		if ( ($_REQUEST['nt'] ?? null) == '' && $this->module_arr['reorder'] )
 		{
 		?>
 		</div>
@@ -798,12 +798,12 @@ else
 							{
 								$add_to_request_str = "&categories=true";
 							}
-							elseif ( $this->module_arr['categories'] )
+							elseif ( ($this->module_arr['categories'] ?? null) )
 							{
 								$add_to_request_str = "&category_id=".$_REQUEST['category_id'];
 							}
 							?>
-							url: "./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=reorder&nt=1<?=$add_to_request_str?>",
+							url: "./?admin_action=<?=$this->module_arr['admin_action']?>&admin_subaction=reorder&nt=1<?=($add_to_request_str ?? null)?>",
 							data: list_arr,
 							success: function(msg){
 								$("#module_list_list").html("<strong>Changes Saved!</strong><br />Refreshing list... <img src='/cms/images/loader.gif'>");
@@ -878,7 +878,7 @@ else
 //============================================================
 // 	RUN after_list()
 //============================================================
-if ( method_exists($module_actions,'after_list') )
+if ( method_exists($module_actions ?? '','after_list') )
 {
 	$module_actions->after_list();
 }

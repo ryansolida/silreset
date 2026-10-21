@@ -50,7 +50,7 @@
 				<div id="logoRight"></div>
 			</div>
 			<?php
-			if ( $_SESSION['reset']['logged_in'] != '' && $logged_out == '' || $logged_in == 1 )
+			if ( ($_SESSION['reset']['logged_in'] ?? null) != '' && ($logged_out ?? null) == '' || ($logged_in ?? null) == 1 )
 			{?>
 			<div id="main_menu_holder">
 				<ul id="main_menu" class="tabs" style="margin-left: 20px;">
@@ -72,7 +72,7 @@
 			}
 			
 			//now set up the script
-			if ( !$iframe )
+			if ( !($iframe ?? null) )
 			{
 				?>
 				<!--<div id="tool_top" class="bg_color2 border1"></div>-->

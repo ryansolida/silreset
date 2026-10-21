@@ -1,7 +1,7 @@
 <?php
 require('modules.php');
 $mod = new modules;
-$subaction = $_REQUEST['admin_subaction'];
+$subaction = ($_REQUEST['admin_subaction'] ?? null);
 if ( $subaction == 'new_module' ){
 	if ( $_POST ){
 	} else {
