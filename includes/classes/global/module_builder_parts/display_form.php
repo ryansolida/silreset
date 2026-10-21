@@ -297,7 +297,7 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 		/*TEXT =================================*/
 		case 'text':
 			//set up size
-			if ($cur_elem['size'] != '' ){
+			if (($cur_elem['size'] ?? null) != '' ){
 				$size = "size='".$cur_elem['size']."'";
 			}else{
 				$size = '';
@@ -345,12 +345,12 @@ for ( $i=0; $i<count($this->module_arr['form_arr']); $i++ )
 		/*SELECT =================================*/
 		case 'select':
 
-			$cur_select = $data[$cur_elem['full_name']];
+			$cur_select = ($data[$cur_elem['full_name']] ?? null);
 			?>
 			<span class='module_field_label'><?=$cur_elem['label']?>:</span> 
 			
 			<?php
-			if ( $cur_elem['notes'] != '' )
+			if ( ($cur_elem['notes'] ?? null) != '' )
 			{
 				?><div class="module_field_notes"><?=stripslashes($cur_elem['notes'])?></div>	<?php
 			}

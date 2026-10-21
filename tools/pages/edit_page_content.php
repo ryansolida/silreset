@@ -24,12 +24,12 @@ $elements = new local_elements;
 			<td width='75%' valign='top'>
 				<div class='ct_mgr border1 round5' style="border-width: 1px;">
 					<?php
-					if ( count($elements->page_sections) > 0 ){
+					if ( count($elements->page_sections ?? []) > 0 ){
 						?>
 						<div class="bg_color1" style="height: 22px; padding-top: 15px;">
 							<ul class="tabs" id="page_section_tabs" style="float: left; width: 400px; margin-left: 20px; padding: 0px; height: 22px; z-index: 5">
 								<?php
-								foreach ($elements->page_sections as $page_section){
+								foreach (($elements->page_sections ?? []) as $page_section){
 									?>
 									<li><a href="javascript:;" onclick="refresh_content('<?=$page_section['name_actual']?>')" class="hover1 page_section_tab" rel="#<?=$page_section['name_actual']?>"><?=$page_section['name_display']?></a></li>
 									<?php
