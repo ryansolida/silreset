@@ -61,7 +61,7 @@ class pages
 		}
 		
 		//show or forget hidden pages
-		if ( !IN_ADMIN || !defined('IN_ADMIN') ) //if you're on the public side
+		if ( !defined('IN_ADMIN') || !IN_ADMIN ) //if you're on the public side
 		{
 			if ( !$arr['show_hidden'] ) //and show_hidden is not set to true
 			{
