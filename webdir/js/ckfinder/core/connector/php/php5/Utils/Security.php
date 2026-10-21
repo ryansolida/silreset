@@ -27,29 +27,11 @@ class CKFinder_Connector_Utils_Security
 {
 
     /**
-     * Strip quotes from global arrays
+     * Magic quotes were removed in PHP 8; nothing to strip.
      * @access public
      */
     public function getRidOfMagicQuotes()
     {
-        if (CKFINDER_CONNECTOR_PHP_MODE<6 && get_magic_quotes_gpc()) {
-            if (!empty($_GET)) {
-                $this->stripQuotes($_GET);
-            }
-            if (!empty($_POST)) {
-                $this->stripQuotes($_POST);
-            }
-            if (!empty($_COOKIE)) {
-                $this->stripQuotes($_COOKIE);
-            }
-            if (!empty($_FILES)) {
-                while (list($k,$v) = each($_FILES)) {
-                    if (isset($_FILES[$k]['name'])) {
-                        $this->stripQuotes($_FILES[$k]['name']);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -64,7 +46,7 @@ class CKFinder_Connector_Utils_Security
     {
         if (is_array($var)) {
             if ($depth++<$howDeep) {
-                while (list($k,$v) = each($var)) {
+                foreach (array_keys($var) as $k) {
                     $this->stripQuotes($var[$k], $depth, $howDeep);
                 }
             }

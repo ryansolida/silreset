@@ -2,6 +2,7 @@
     "name": "shoutitlouder/resetcms",
     "description": "Reset CMS",
     "require": {
+        "php": ">=8.3",
         "symfony/var-dumper": "^5.0",
         "vlucas/phpdotenv": "^4.1",
         "symfony/console": "^5.0",

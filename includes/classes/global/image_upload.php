@@ -68,7 +68,7 @@ class resize_image {
 
 class image_upload 
 {
-	function image_upload($upload_field_name,$save_dir,$max_dimension,$thumb_size=130,$thumb_only=0,$full_only=0)
+	function __construct($upload_field_name,$save_dir,$max_dimension,$thumb_size=130,$thumb_only=0,$full_only=0)
 	{
 
 		//run file upload

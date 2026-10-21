@@ -3,7 +3,7 @@ require_once('module_data.php');
 
 class module_data_export extends module_data
 {
-	function module_data_export($module_name='')
+	function __construct($module_name='')
 	{
 		if ( $module_name != '' )
 		{

@@ -14,7 +14,7 @@ require_once('module_builder_parts/relationships.php');
 class module
 {
 	
-	function module($module_arr = array())
+	function __construct($module_arr = array())
 	{
 		$relationships = new relationships;
 		

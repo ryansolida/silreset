@@ -2,7 +2,7 @@
 
 class module_data
 {	
-	function module_data($module_name='',$get_all=FALSE)
+	function __construct($module_name='',$get_all=FALSE)
 	{
 		require_once('relationships.php');
 		if ( $module_name != '' )

@@ -2,7 +2,7 @@
 require_once('pages.php');
 class page extends pages
 {
-	function page($arr='',$published='')
+	function __construct($arr='',$published='')
 	{	
 		if ($arr == '' )
 		{

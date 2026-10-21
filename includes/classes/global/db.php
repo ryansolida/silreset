@@ -1,7 +1,7 @@
 <?php
 class db
 {
-	function db()
+	function __construct()
 	{
 		$this->db_connect();
 	}

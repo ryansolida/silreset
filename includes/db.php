@@ -2,7 +2,7 @@
 $db_connection = FALSE;
 class db
 {
-	function db($db_source = 0) 
+	function __construct($db_source = 0) 
 	{
 		global $db_connection;
 		$this->db_source = $db_source;
@@ -159,7 +159,7 @@ class db
 	//==============================
 	function close_connection()
 	{
-		 mysql_close($this->db_connect);
+		 mysqli_close($this->db_connect);
 	}
 	
 	//==============================
@@ -167,7 +167,7 @@ class db
 	//==============================
 	function get_insert_id()
 	{
-		return $this->insert_id = mysql_insert_id($this->db_connect);
+		return $this->insert_id = mysqli_insert_id($this->db_connect);
 	}	
 }
 ?>
